@@ -1,0 +1,119 @@
+<!-- Loading Screen -->
+<div *ngIf="loading()" @loaderAnim class="loader" aria-live="polite">
+  <div class="loader-content">
+    <div class="spinner"></div>
+    <div class="loader-text">
+      <span class="loader-greeting">Bienvenue</span>
+      <div class="loader-progress">
+        <div class="progress-bar"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Hero Section -->
+<section *ngIf="!loading()" @heroAnim class="hero">
+  <!-- Éléments décoratifs en arrière-plan -->
+  <div class="bg-decoration">
+    <div class="circle circle-1"></div>
+    <div class="circle circle-2"></div>
+    <div class="circle circle-3"></div>
+    <div class="grid-lines"></div>
+  </div>
+
+  <div class="hero-content">
+    <!-- Navigation avec effet de soulignement amélioré -->
+    <nav class="nav-menu" aria-label="Main navigation">
+      <a href="#home" class="active" data-text="HOME">HOME</a>
+      <a href="#about" data-text="ABOUT ME">ABOUT ME</a>
+      <a href="#projects" data-text="PROJECTS">PROJECTS</a>
+      <a href="#services" data-text="SERVICES">SERVICES</a>
+      <a href="#contact" data-text="CONTACT">CONTACT</a>
+    </nav>
+
+    <!-- Nom avec effet de révélation -->
+    <h1 class="name">
+      <span class="first-line">
+        <span class="word">YOBOUKOI</span>
+        <span class="word">DIOULO</span>
+      </span>
+      <span class="last-line">
+        <span class="word gradient-text">DIVINE</span>
+      </span>
+    </h1>
+
+    <!-- Présentation avec animation -->
+    <div class="intro-text">
+      <p class="greeting">
+        <span class="greeting-word">HEY</span>
+        <span class="greeting-word">I'M</span>
+        <span class="greeting-word highlight">DIVINE</span>
+      </p>
+      <div class="subtitle-container">
+        <p class="subtitle" aria-live="polite">
+          {{ typedSubtitle() }}
+          <span *ngIf="!typingDone()" class="cursor" aria-hidden="true"></span>
+        </p>
+        <div class="subtitle-glow"></div>
+      </div>
+    </div>
+
+    <!-- Description avec effet de glow -->
+    <p class="description">
+      <span class="quote-mark">"</span>
+      Passionnée par le développement web et mobile, je transforme des idées en 
+      applications élégantes et fonctionnelles. Étudiante en L3 Génie Logiciel.
+      <span class="quote-mark closing">"</span>
+    </p>
+
+    <!-- Boutons d'action -->
+    <div class="cta-group">
+      <a href="#contact" class="cta-button primary">
+        <span class="button-text">GET IN TOUCH</span>
+        <span class="button-icon">→</span>
+        <span class="button-glow"></span>
+      </a>
+      
+      <!-- Spotify Player sans cadre -->
+      <div class="spotify-wrapper">
+        <iframe 
+          src="https://open.spotify.com/embed/track/4dlFGIn5KP6AaCZSujM7cj?utm_source=generator" 
+          width="100%" 
+          height="80" 
+          frameBorder="0" 
+          allowfullscreen="" 
+          allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
+          loading="lazy"
+          title="Finally Over It - Summer Walker"
+          class="spotify-player">
+        </iframe>
+      </div>
+    </div>
+  </div>
+
+  <!-- Photo avec effets -->
+  <div class="hero-image" aria-hidden="true">
+    <!-- Image avec cadre artistique -->
+    <div class="image-wrapper">
+      <div class="image-frame">
+        <div class="frame-decoration"></div>
+        <img 
+          src="assets/photo2.jpeg" 
+          alt="Divine Yoboukoi Dioulo"
+          loading="eager"
+          (error)="onImageError($event)">
+        <div class="image-overlay"></div>
+        <div class="image-glow"></div>
+      </div>
+      
+      <!-- Badges flottants des technologies -->
+      <div class="tech-bubbles">
+        <span class="bubble" style="--i:1">Flutter</span>
+        <span class="bubble" style="--i:2">Angular</span>
+        <span class="bubble" style="--i:3">React</span>
+        <span class="bubble" style="--i:4">Python</span>
+        <span class="bubble" style="--i:5">HTML/CSS</span>
+      </div>
+    </div>
+  </div>
+</section>
