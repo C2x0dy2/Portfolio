@@ -1,12 +1,8 @@
 import { Component, signal, Inject, PLATFORM_ID, AfterViewInit } from '@angular/core';
 import { CommonModule, isPlatformBrowser } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { 
-  trigger, 
-  transition, 
-  style, 
-  animate 
-} from '@angular/animations';
+import { trigger, transition, style, animate } from '@angular/animations';
+import { ApiService } from '../api.service';
 
 @Component({
   selector: 'app-contact',
@@ -51,15 +47,8 @@ export class ContactComponent implements AfterViewInit {
   isSubmitting = false;
   showSuccess = false;
   
-  // Données du formulaire
-  formData = {
-    name: '',
-    email: '',
-    subject: '',
-    message: ''
-  };
+  formData = { name: '', email: '', subject: '', message: '' };
 
-  // Liens sociaux
   socialLinks = {
     linkedin: 'https://www.linkedin.com/in/dioulo-divine-yoboukoi-800b96372/',
     github: 'https://github.com/C2x0dy2',
@@ -70,11 +59,13 @@ export class ContactComponent implements AfterViewInit {
     phone: '+2250143829494'
   };
 
-  constructor(@Inject(PLATFORM_ID) private platformId: Object) {
+  constructor(
+    @Inject(PLATFORM_ID) private platformId: Object,
+    private api: ApiService
+  ) {
     setTimeout(() => {
       this.loading.set(false);
       if (isPlatformBrowser(this.platformId)) {
-        // wait for *ngIf to render the section
         setTimeout(() => this.setupScrollAnimations(), 200);
       }
     }, 1600);
@@ -94,43 +85,25 @@ export class ContactComponent implements AfterViewInit {
     document.querySelectorAll('.sr').forEach(el => observer.observe(el));
   }
 
-  // Méthode appelée à la soumission du formulaire
   onSubmit() {
-    if (isPlatformBrowser(this.platformId)) {
-      this.isSubmitting = true;
+    if (!isPlatformBrowser(this.platformId)) return;
+    this.isSubmitting = true;
 
-      // Construction du mailto avec les données du formulaire
-      const subject = encodeURIComponent(this.formData.subject);
-      const body = encodeURIComponent(
-        `Nom: ${this.formData.name}\n` +
-        `Email: ${this.formData.email}\n\n` +
-        `Message:\n${this.formData.message}`
-      );
-
-      const mailtoLink = `mailto:${this.socialLinks.email}?subject=${subject}&body=${body}`;
-
-      // Ouvrir le client mail par défaut
-      window.location.href = mailtoLink;
-
-      // Simuler l'envoi (dans un cas réel, tu ferais un appel API)
-      setTimeout(() => {
+    this.api.sendContact(this.formData).subscribe({
+      next: () => {
         this.isSubmitting = false;
         this.showSuccess = true;
-        
-        // Réinitialiser le formulaire
-        this.formData = {
-          name: '',
-          email: '',
-          subject: '',
-          message: ''
-        };
-
-        // Cacher le message de succès après 5 secondes
-        setTimeout(() => {
-          this.showSuccess = false;
-        }, 5000);
-      }, 1000);
-    }
+        this.formData = { name: '', email: '', subject: '', message: '' };
+        setTimeout(() => { this.showSuccess = false; }, 5000);
+      },
+      error: () => {
+        // Fallback mailto si backend off
+        const subject = encodeURIComponent(this.formData.subject);
+        const body = encodeURIComponent(`Nom: ${this.formData.name}\nEmail: ${this.formData.email}\n\n${this.formData.message}`);
+        window.location.href = `mailto:${this.socialLinks.email}?subject=${subject}&body=${body}`;
+        this.isSubmitting = false;
+      }
+    });
   }
 
   // Méthodes pour ouvrir les liens (alternative si besoin)

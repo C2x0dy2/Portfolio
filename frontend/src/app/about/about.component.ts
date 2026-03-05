@@ -2,6 +2,7 @@ import { Component, signal, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { trigger, transition, style, animate } from '@angular/animations';
+import { ApiService, Skill } from '../api.service';
 
 @Component({
   selector: 'app-about',
@@ -19,6 +20,7 @@ import { trigger, transition, style, animate } from '@angular/animations';
 })
 export class AboutComponent {
   private sanitizer = inject(DomSanitizer);
+  private api = inject(ApiService);
 
   loading = signal(true);
   prefersReducedMotion = false;
@@ -36,19 +38,8 @@ export class AboutComponent {
 
   trackUrls: SafeResourceUrl[] = [];
 
-  programmingLanguages = [
-    { name: 'HTML / CSS', level: 90 },
-    { name: 'Python',     level: 85 },
-    { name: 'JavaScript', level: 80 },
-    { name: 'C',          level: 70 }
-  ];
-
-  frameworks = [
-    { name: 'Git / GitHub', level: 80 },
-    { name: 'Django',       level: 75 },
-    { name: 'Flutter',      level: 70 },
-    { name: 'Odoo',         level: 65 }
-  ];
+  programmingLanguages: Skill[] = [];
+  frameworks: Skill[] = [];
 
   constructor() {
     if (typeof window !== 'undefined') {
@@ -60,6 +51,28 @@ export class AboutComponent {
         `https://open.spotify.com/embed/track/${id}?utm_source=generator&theme=0`
       )
     );
+
+    this.api.getSkills().subscribe({
+      next: (skills) => {
+        this.programmingLanguages = skills.filter(s => s.category === 'languages');
+        this.frameworks = skills.filter(s => s.category === 'frameworks');
+      },
+      error: () => {
+        // fallback si backend indisponible
+        this.programmingLanguages = [
+          { id: 1, name: 'HTML / CSS', level: 90, category: 'languages' },
+          { id: 2, name: 'Python',     level: 85, category: 'languages' },
+          { id: 3, name: 'JavaScript', level: 80, category: 'languages' },
+          { id: 4, name: 'C',          level: 70, category: 'languages' },
+        ];
+        this.frameworks = [
+          { id: 5, name: 'Git / GitHub', level: 80, category: 'frameworks' },
+          { id: 6, name: 'Django',       level: 75, category: 'frameworks' },
+          { id: 7, name: 'Flutter',      level: 70, category: 'frameworks' },
+          { id: 8, name: 'Odoo',         level: 65, category: 'frameworks' },
+        ];
+      }
+    });
 
     setTimeout(() => {
       this.loading.set(false);

@@ -69,12 +69,48 @@ projects = [
         "year": "2024-2025",
         "description": "Plateforme de blog moderne où les utilisateurs peuvent créer, partager et commenter des articles. Interface dynamique et réactive.",
         "technologies": ["React", "JavaScript", "HTML5", "CSS3", "Node.js"],
-        "features": ["Création et publication d'articles", "Système de commentaires", "Catégorisation des articles", "Interface responsive"],
+        "features": ["Création et publication d'articles", "Système de commentaires", "Catégorisation des articles", "Recherche avancée", "Interface responsive"],
+        "type": "web",
+        "deployed": False,
+        "github_link": "https://github.com/divinedioulo/react-blog",
+        "demo_link": None,
+        "category": "web"
+    },
+    {
+        "name": "Les Délices de Oli",
+        "year": "2024-2025",
+        "description": "Site responsive de commande de repas pour les étudiants de l'IIT. Permet de commander à manger en temps et en heure.",
+        "technologies": ["Java", "JSP", "Servlets", "HTML5", "CSS3", "MySQL"],
+        "features": ["Commande de repas en ligne", "Gestion des horaires", "Paiement intégré", "Suivi des commandes en temps réel", "Interface mobile-first"],
         "type": "web",
         "deployed": False,
         "github_link": None,
         "demo_link": None,
         "category": "web"
+    },
+    {
+        "name": "SwapiIt",
+        "year": "2023-2024",
+        "description": "Application Flutter de vente d'articles de seconde main. Permet aux utilisateurs de vendre leurs articles inutilisés pour générer des revenus et promouvoir le recyclage.",
+        "technologies": ["Flutter", "Dart", "Firebase", "Provider"],
+        "features": ["Vente d'articles de seconde main", "Publication d'annonces avec photos", "Messagerie intégrée en temps réel", "Système de paiement sécurisé", "Géolocalisation des articles"],
+        "type": "mobile",
+        "deployed": False,
+        "github_link": "https://github.com/divinedioulo/swapiit",
+        "demo_link": None,
+        "category": "mobile"
+    },
+    {
+        "name": "Mindcare",
+        "year": "2024-2025",
+        "description": "Application Flutter pour le suivi psychologique. Conçue pour aider les utilisateurs à suivre leur bien-être mental au quotidien avec des outils interactifs.",
+        "technologies": ["Flutter", "Dart", "Firebase", "Provider", "Charts"],
+        "features": ["Suivi quotidien de l'humeur", "Journal des émotions", "Statistiques et graphiques d'évolution", "Exercices de respiration guidés", "Rappels personnalisés"],
+        "type": "mobile",
+        "deployed": False,
+        "github_link": "https://github.com/divinedioulo/mindcare",
+        "demo_link": None,
+        "category": "mobile"
     },
 ]
 

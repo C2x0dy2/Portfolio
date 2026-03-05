@@ -73,6 +73,27 @@ body {
 body.cursor-hover #cursor      { width: 14px; height: 14px; }
 body.cursor-hover #cursor-ring { width: 60px; height: 60px; border-color: var(--accent); }
 
+/* ─── Page Transition Curtain ─── */
+#page-curtain {
+  position: fixed;
+  inset: 0;
+  background: var(--dark);
+  z-index: 8000;
+  transform: translateY(-100%);
+  pointer-events: none;
+  will-change: transform;
+}
+
+#page-curtain::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: var(--accent);
+}
+
 /* ─── Branded Selection ─── */
 ::selection {
   background: var(--accent);
