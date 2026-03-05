@@ -441,8 +441,9 @@
 .projects-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-  gap: 1.5rem;
+  gap: 2.8rem 2.4rem;
   margin-bottom: 3rem;
+  align-items: start;
 }
 
 /* Project Card - Clean White Design */
@@ -452,8 +453,11 @@
   border: 1px solid rgba(59, 130, 246, 0.1);
   border-radius: 16px;
   overflow: hidden;
-  transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.35s ease, border-color 0.3s;
-  box-shadow: 0 4px 24px rgba(15, 23, 42, 0.07);
+  transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.35s ease, border-color 0.3s, z-index 0s;
+  box-shadow: 0 2px 8px rgba(15, 23, 42, 0.06), 0 8px 28px rgba(15, 23, 42, 0.1);
+  z-index: 0;
+  isolation: isolate;
+  will-change: transform;
 }
 
 /* Card Header */
@@ -510,6 +514,7 @@
   font-size: 0.7rem;
   font-weight: 700;
   border: 1px solid rgba(99, 102, 241, 0.2);
+  white-space: nowrap;
 }
 
 .badge-status {
@@ -520,6 +525,7 @@
   background: rgba(239, 68, 68, 0.08);
   color: #DC2626;
   border: 1px solid rgba(239, 68, 68, 0.2);
+  white-space: nowrap;
 }
 
 .badge-status.deployed {
@@ -817,6 +823,7 @@
   transform: translateY(-6px);
   box-shadow: 0 20px 50px rgba(59, 130, 246, 0.18), 0 0 0 1px rgba(59, 130, 246, 0.12);
   border-color: rgba(59, 130, 246, 0.22);
+  z-index: 10;
 }
 
 /* ===== Card Accent Bar - Left Vertical ===== */

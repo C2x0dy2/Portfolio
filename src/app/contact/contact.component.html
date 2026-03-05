@@ -1,0 +1,269 @@
+<!-- Loading Screen -->
+<div *ngIf="loading()" @loaderAnim class="loader" aria-live="polite">
+  <div class="loader-content">
+    <div class="spinner"></div>
+    <div class="loader-text">
+      <span class="loader-greeting">CONTACT</span>
+      <div class="loader-progress">
+        <div class="progress-bar"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Contact Section -->
+<section *ngIf="!loading()" class="contact" #contactSection>
+  <!-- Background Décoration -->
+  <div class="bg-decoration">
+    <div class="circle circle-1"></div>
+    <div class="circle circle-2"></div>
+    <div class="circle circle-3"></div>
+    <div class="grid-lines"></div>
+    <div class="floating-shapes">
+      <div class="shape shape-1"></div>
+      <div class="shape shape-2"></div>
+      <div class="shape shape-3"></div>
+      <div class="shape shape-4"></div>
+      <div class="shape shape-5"></div>
+    </div>
+    <div class="particles">
+      <span class="particle p1"></span>
+      <span class="particle p2"></span>
+      <span class="particle p3"></span>
+      <span class="particle p4"></span>
+      <span class="particle p5"></span>
+    </div>
+  </div>
+
+  <div class="contact-container">
+    <!-- Navigation -->
+    <nav class="nav-menu" aria-label="Main navigation">
+      <a href="/" data-text="HOME">HOME</a>
+      <a href="about" data-text="ABOUT ME">ABOUT ME</a>
+      <a href="projects" data-text="PROJECTS">PROJECTS</a>
+      <a href="services" data-text="SERVICES">SERVICES</a>
+      <a href="contact" class="active" data-text="CONTACT">CONTACT</a>
+    </nav>
+
+    <!-- Hero Header -->
+    <div class="section-header">
+      <div class="available-badge scroll-reveal scale-in">
+        <span class="pulse-dot"></span>
+        Disponible pour stage &amp; freelance
+      </div>
+      <span class="section-subtitle scroll-reveal fade-up" style="transition-delay:0.05s">GET IN TOUCH</span>
+      <h1 class="section-title">
+        <span class="title-word">CONTACT</span>
+        <span class="title-word gradient-text">ME</span>
+      </h1>
+      <div class="title-decoration scroll-reveal scale-in" style="transition-delay:0.2s">
+        <span class="line"></span>
+        <span class="dot"></span>
+        <span class="line"></span>
+      </div>
+      <p class="section-description scroll-reveal fade-up" style="transition-delay:0.25s">
+        N'hésitez pas à me contacter pour toute collaboration, projet ou opportunité de stage.
+        Je réponds généralement sous 24h.
+      </p>
+    </div>
+
+    <!-- Quick Stats -->
+    <div class="quick-stats scroll-reveal fade-up" style="transition-delay:0.1s">
+      <div class="quick-stat">
+        <span class="qs-icon">⚡</span>
+        <span class="qs-text">Réponse &lt; 24h</span>
+      </div>
+      <div class="qs-divider"></div>
+      <div class="quick-stat">
+        <span class="qs-icon">📍</span>
+        <span class="qs-text">Abidjan, CI</span>
+      </div>
+      <div class="qs-divider"></div>
+      <div class="quick-stat">
+        <span class="qs-icon">🌍</span>
+        <span class="qs-text">Remote / Présentiel</span>
+      </div>
+      <div class="qs-divider"></div>
+      <div class="quick-stat">
+        <span class="qs-icon">💼</span>
+        <span class="qs-text">Open to Work</span>
+      </div>
+    </div>
+
+    <div class="contact-content">
+      <!-- Left Side - Contact Info -->
+      <div class="contact-info">
+        <h2 class="info-title scroll-reveal slide-left">Parlons de votre projet</h2>
+        <p class="info-description scroll-reveal fade-up" style="transition-delay:0.1s">
+          Je suis toujours ouverte aux nouvelles opportunités et collaborations.
+          Que ce soit pour un projet, un stage ou simplement pour échanger,
+          n'hésitez pas à me contacter.
+        </p>
+
+        <!-- Contact Cards -->
+        <div class="contact-cards">
+          <div class="contact-card scroll-reveal slide-left" style="transition-delay:0.05s">
+            <div class="card-icon phone">
+              <i class="fas fa-phone-alt"></i>
+            </div>
+            <div class="card-details">
+              <h3>Téléphone &amp; WhatsApp</h3>
+              <a href="https://wa.me/2250143829494" target="_blank" class="contact-link">
+                <span class="link-text">+225 01 43 82 94 94</span>
+                <span class="link-badge">WhatsApp</span>
+              </a>
+            </div>
+          </div>
+
+          <div class="contact-card scroll-reveal slide-right" style="transition-delay:0.1s">
+            <div class="card-icon email">
+              <i class="fas fa-envelope"></i>
+            </div>
+            <div class="card-details">
+              <h3>Email</h3>
+              <a href="mailto:divineyoboukoi2005@gmail.com" class="contact-link">
+                divineyoboukoi2005@gmail.com
+              </a>
+            </div>
+          </div>
+
+          <div class="contact-card scroll-reveal slide-left" style="transition-delay:0.15s">
+            <div class="card-icon location">
+              <i class="fas fa-map-marker-alt"></i>
+            </div>
+            <div class="card-details">
+              <h3>Localisation</h3>
+              <p class="contact-text">Abidjan, Côte d'Ivoire</p>
+            </div>
+          </div>
+
+          <div class="contact-card scroll-reveal slide-right" style="transition-delay:0.2s">
+            <div class="card-icon availability">
+              <i class="fas fa-clock"></i>
+            </div>
+            <div class="card-details">
+              <h3>Disponibilité</h3>
+              <p class="contact-text">Lun - Ven, 9h - 18h</p>
+              <span class="availability-badge">Disponible pour stage</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Social Media Links -->
+        <div class="social-section">
+          <h3 class="social-title scroll-reveal fade-up">Retrouvez-moi sur les réseaux</h3>
+          <div class="social-grid">
+            <a href="https://www.linkedin.com/in/dioulo-divine-yoboukoi-800b96372/"
+               target="_blank"
+               class="social-card linkedin scroll-reveal scale-in" style="transition-delay:0.05s">
+              <div class="social-icon"><i class="fab fa-linkedin-in"></i></div>
+              <span>LinkedIn</span>
+            </a>
+            <a href="https://github.com/C2x0dy2"
+               target="_blank"
+               class="social-card github scroll-reveal scale-in" style="transition-delay:0.1s">
+              <div class="social-icon"><i class="fab fa-github"></i></div>
+              <span>GitHub</span>
+            </a>
+            <a href="https://www.instagram.com/c2x0dy/"
+               target="_blank"
+               class="social-card instagram scroll-reveal scale-in" style="transition-delay:0.15s">
+              <div class="social-icon"><i class="fab fa-instagram"></i></div>
+              <span>Instagram</span>
+            </a>
+            <a href="https://www.facebook.com/profile.php?id=61574855326266"
+               target="_blank"
+               class="social-card facebook scroll-reveal scale-in" style="transition-delay:0.2s">
+              <div class="social-icon"><i class="fab fa-facebook-f"></i></div>
+              <span>Facebook</span>
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Right Side - Contact Form -->
+      <div class="contact-form-container scroll-reveal slide-right">
+        <form class="contact-form" (ngSubmit)="onSubmit()" #contactForm="ngForm">
+          <div class="form-header">
+            <h2 class="form-title">Envoyez-moi un message</h2>
+            <p class="form-subtitle">Je vous réponds sous 24h ⚡</p>
+          </div>
+
+          <!-- Nom + Email côte à côte -->
+          <div class="form-row">
+            <div class="form-group">
+              <label for="name"><i class="fas fa-user"></i> Votre nom</label>
+              <input
+                type="text" id="name" name="name"
+                [(ngModel)]="formData.name" #name="ngModel"
+                required minlength="2" placeholder="John Doe"
+                class="form-input" [class.error]="name.invalid && name.touched">
+              <div class="error-message" *ngIf="name.invalid && name.touched">
+                <span *ngIf="name.errors?.['required']">Le nom est requis</span>
+                <span *ngIf="name.errors?.['minlength']">Minimum 2 caractères</span>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="email"><i class="fas fa-envelope"></i> Votre email</label>
+              <input
+                type="email" id="email" name="email"
+                [(ngModel)]="formData.email" #email="ngModel"
+                required email placeholder="john@example.com"
+                class="form-input" [class.error]="email.invalid && email.touched">
+              <div class="error-message" *ngIf="email.invalid && email.touched">
+                <span *ngIf="email.errors?.['required']">L'email est requis</span>
+                <span *ngIf="email.errors?.['email']">Email invalide</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="form-group scroll-reveal fade-up" style="transition-delay:0.15s">
+            <label for="subject"><i class="fas fa-tag"></i> Sujet</label>
+            <input
+              type="text" id="subject" name="subject"
+              [(ngModel)]="formData.subject" #subject="ngModel"
+              required placeholder="Objet de votre message"
+              class="form-input" [class.error]="subject.invalid && subject.touched">
+            <div class="error-message" *ngIf="subject.invalid && subject.touched">
+              Le sujet est requis
+            </div>
+          </div>
+
+          <div class="form-group scroll-reveal fade-up" style="transition-delay:0.2s">
+            <label for="message"><i class="fas fa-comment-alt"></i> Votre message</label>
+            <textarea
+              id="message" name="message"
+              [(ngModel)]="formData.message" #message="ngModel"
+              required minlength="10" rows="5"
+              placeholder="Décrivez votre projet, vos besoins..."
+              class="form-input"
+              [class.error]="message.invalid && message.touched"></textarea>
+            <div class="error-message" *ngIf="message.invalid && message.touched">
+              <span *ngIf="message.errors?.['required']">Le message est requis</span>
+              <span *ngIf="message.errors?.['minlength']">Minimum 10 caractères</span>
+            </div>
+          </div>
+
+          <button
+            type="submit"
+            class="submit-btn scroll-reveal fade-up"
+            style="transition-delay:0.25s"
+            [disabled]="contactForm.invalid || isSubmitting">
+            <span *ngIf="!isSubmitting">
+              <i class="fas fa-paper-plane"></i> Envoyer le message
+            </span>
+            <span *ngIf="isSubmitting" class="loading-spinner">
+              <i class="fas fa-spinner fa-spin"></i> Envoi en cours...
+            </span>
+          </button>
+
+          <div class="success-message" *ngIf="showSuccess">
+            <i class="fas fa-check-circle"></i>
+            Message envoyé avec succès ! Je vous répondrai dans les plus brefs délais.
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
