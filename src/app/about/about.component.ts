@@ -92,6 +92,7 @@ export class AboutComponent {
     // Simulation du chargement
     setTimeout(() => {
       this.loading.set(false);
+      setTimeout(() => this.setupScrollAnimations(), 200);
     }, 1600);
   }
 
@@ -118,23 +119,24 @@ export class AboutComponent {
     }
   }
 
-  // Méthode pour gérer l'intersection observer (animation au scroll)
-  setupIntersectionObserver() {
-    if (typeof window !== 'undefined' && !this.prefersReducedMotion) {
-      const observer = new IntersectionObserver(
-        (entries) => {
-          entries.forEach(entry => {
-            if (entry.isIntersecting) {
-              entry.target.classList.add('in-view');
-            }
-          });
-        },
-        { threshold: 0.1, rootMargin: '50px' }
-      );
+  setupScrollAnimations(): void {
+    if (typeof window === 'undefined' || this.prefersReducedMotion) return;
 
-      // Observer les éléments à animer au scroll
-      document.querySelectorAll('.skill-item, .timeline-item, .achievement-card')
-        .forEach(el => observer.observe(el));
-    }
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            const delay = (entry.target as HTMLElement).dataset['delay'] || '0';
+            (entry.target as HTMLElement).style.transitionDelay = `${delay}ms`;
+            entry.target.classList.add('is-visible');
+            observer.unobserve(entry.target);
+          }
+        });
+      },
+      { threshold: 0.1, rootMargin: '0px 0px -60px 0px' }
+    );
+
+    document.querySelectorAll('.scroll-reveal')
+      .forEach(el => observer.observe(el));
   }
 }
