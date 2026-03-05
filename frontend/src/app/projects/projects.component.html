@@ -1,0 +1,89 @@
+<!-- Loader -->
+<div *ngIf="loading()" @loaderAnim class="loader" aria-live="polite">
+  <div class="loader-word">PROJETS</div>
+  <div class="loader-line"></div>
+</div>
+
+<!-- Projects Section -->
+<section *ngIf="!loading()" class="projects">
+
+  <!-- Nav -->
+  <nav class="nav-menu" aria-label="Navigation">
+    <a href="/">HOME</a>
+    <a href="/about">ABOUT</a>
+    <a href="/projects" class="active">PROJECTS</a>
+    <a href="/contact">CONTACT</a>
+  </nav>
+
+  <!-- Header -->
+  <div class="sr">
+    <p class="section-label">PORTFOLIO</p>
+    <h1 class="section-title">
+      Mes<br><span class="outline">Projets.</span>
+    </h1>
+    <p class="section-desc">
+      Des interfaces web &amp; mobile construites avec soin — de la maquette
+      au déploiement.
+    </p>
+  </div>
+
+  <!-- Stats -->
+  <div class="stats-bar sr">
+    <div class="stat">
+      <div class="stat-num">{{ getTotalProjects() }}<span>+</span></div>
+      <div class="stat-lbl">Total</div>
+    </div>
+    <div class="stat">
+      <div class="stat-num">{{ getWebProjects() }}</div>
+      <div class="stat-lbl">Web</div>
+    </div>
+    <div class="stat">
+      <div class="stat-num">{{ getMobileProjects() }}</div>
+      <div class="stat-lbl">Mobile</div>
+    </div>
+    <div class="stat">
+      <div class="stat-num">{{ getTechnologiesCount() }}<span>+</span></div>
+      <div class="stat-lbl">Technos</div>
+    </div>
+  </div>
+
+  <!-- Filters -->
+  <div class="project-filters sr">
+    <button class="filter-btn" [class.active]="selectedCategory() === 'all'" (click)="filterByCategory('all')">Tous</button>
+    <button class="filter-btn" [class.active]="selectedCategory() === 'web'" (click)="filterByCategory('web')">Web</button>
+    <button class="filter-btn" [class.active]="selectedCategory() === 'mobile'" (click)="filterByCategory('mobile')">Mobile</button>
+  </div>
+
+  <!-- Grid -->
+  <div class="projects-grid">
+    <div class="project-card sr"
+         *ngFor="let project of filteredProjects()">
+
+      <div class="card-top">
+        <span class="card-year">{{ project.year }}</span>
+        <div class="card-links">
+          <a *ngIf="project.githubLink" class="card-link" [href]="project.githubLink" target="_blank" rel="noopener" title="GitHub">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 .3a12 12 0 0 0-3.8 23.4c.6.1.8-.3.8-.6v-2c-3.3.7-4-1.6-4-1.6-.6-1.4-1.4-1.8-1.4-1.8-1-.7.1-.7.1-.7 1.1.1 1.7 1.1 1.7 1.1 1 1.8 2.8 1.3 3.5 1 .1-.8.4-1.3.7-1.6-2.7-.3-5.5-1.3-5.5-5.9 0-1.3.5-2.4 1.2-3.2 0-.4-.5-1.6.2-3.2 0 0 1-.3 3.3 1.2a11.5 11.5 0 0 1 6 0C17 4.7 18 5 18 5c.7 1.6.2 2.8.1 3.2.8.8 1.2 1.9 1.2 3.2 0 4.6-2.8 5.6-5.5 5.9.5.4.9 1.2.9 2.3v3.3c0 .3.2.7.8.6A12 12 0 0 0 12 .3"/></svg>
+          </a>
+          <a *ngIf="project.demoLink" class="card-link" [href]="project.demoLink" target="_blank" rel="noopener" title="Demo">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m7 7 10 10M17 7v10H7"/></svg>
+          </a>
+        </div>
+      </div>
+
+      <h2 class="card-name">{{ project.name }}</h2>
+      <p class="card-desc">{{ project.description }}</p>
+
+      <div class="tech-tags">
+        <span class="tech-tag" *ngFor="let tech of project.technologies">{{ tech }}</span>
+      </div>
+
+      <span class="card-badge">{{ project.type }}</span>
+    </div>
+
+    <div class="empty-state" *ngIf="filteredProjects().length === 0">
+      Aucun projet dans cette catégorie
+    </div>
+  </div>
+
+</section>

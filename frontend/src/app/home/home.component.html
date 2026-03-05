@@ -1,0 +1,85 @@
+<!-- ─── Loader ─── -->
+<div *ngIf="loading()" @loaderAnim class="loader" aria-live="polite">
+  <span class="loader-word">Divine.</span>
+  <div class="loader-line"></div>
+</div>
+
+<!-- ─── Hero ─── -->
+<section *ngIf="!loading()" @heroAnim class="hero">
+
+  <!-- Global nav -->
+  <nav class="nav-menu" aria-label="Main navigation">
+    <a href="/"        class="active">Home</a>
+    <a href="about">About</a>
+    <a href="projects">Projects</a>
+    <a href="contact">Contact</a>
+  </nav>
+
+  <!-- Left column -->
+  <div class="hero-content">
+
+    <p class="eyebrow">Available for internship</p>
+
+    <h1 class="name" aria-label="Yoboukoi Dioulo Divine">
+      <span class="line-clip"><span class="name-word w1">Yoboukoi</span></span>
+      <span class="line-clip"><span class="name-word w2">Dioulo</span></span>
+      <span class="line-clip"><span class="name-word w3">Divine</span></span>
+    </h1>
+
+    <div class="subtitle-row">
+      <p class="subtitle" aria-live="polite">
+        {{ typedSubtitle() }}<span *ngIf="!typingDone()" class="cursor" aria-hidden="true"></span>
+      </p>
+    </div>
+
+    <p class="description">
+      Passionnée par le développement web&nbsp;&amp;&nbsp;mobile, je transforme
+      des idées en applications élégantes et fonctionnelles.
+      Étudiante en L3&nbsp;Génie Logiciel.
+    </p>
+
+    <div class="cta-group">
+      <a href="contact" class="cta-button">
+        <span>Get in touch</span>
+        <span class="btn-icon">↗</span>
+      </a>
+      <a href="projects" class="btn-ghost">See work</a>
+    </div>
+
+    <div class="spotify-wrapper">
+      <iframe
+        src="https://open.spotify.com/embed/track/4dlFGIn5KP6AaCZSujM7cj?utm_source=generator&theme=0"
+        width="100%" height="80" frameBorder="0"
+        allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
+        loading="lazy" title="Now playing" class="spotify-player">
+      </iframe>
+    </div>
+  </div>
+
+  <!-- Right column — photo -->
+  <div class="hero-image" aria-hidden="true">
+    <div class="image-wrapper">
+      <div class="image-frame">
+        <img src="assets/photo2.jpeg" alt="Divine Yoboukoi Dioulo"
+             loading="eager" (error)="onImageError($event)">
+      </div>
+      <div class="image-corner tl"></div>
+      <div class="image-corner br"></div>
+
+      <div class="tech-bubbles">
+        <span class="bubble">Flutter</span>
+        <span class="bubble">Angular</span>
+        <span class="bubble">React</span>
+        <span class="bubble">Python</span>
+        <span class="bubble">Django</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Scroll indicator -->
+  <div class="scroll-cue">
+    <span class="scroll-line"></span>
+    <span class="scroll-text">Scroll</span>
+  </div>
+
+</section>

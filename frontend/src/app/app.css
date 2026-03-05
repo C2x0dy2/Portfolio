@@ -1,0 +1,5 @@
+.route-wrap {
+  position: relative;
+  min-height: 100svh;
+  overflow-x: hidden;
+}

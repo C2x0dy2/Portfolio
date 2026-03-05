@@ -1,0 +1,122 @@
+<!-- Loader -->
+<div *ngIf="loading()" @loaderAnim class="loader" aria-live="polite">
+  <div class="loader-word">À PROPOS</div>
+  <div class="loader-line"></div>
+</div>
+
+<!-- About Section -->
+<section *ngIf="!loading()" class="about">
+
+  <!-- Nav -->
+  <nav class="nav-menu" aria-label="Navigation">
+    <a href="/">HOME</a>
+    <a href="/about" class="active">ABOUT</a>
+    <a href="/projects">PROJECTS</a>
+    <a href="/contact">CONTACT</a>
+  </nav>
+
+  <div class="about-grid">
+
+    <!-- Left — sticky image -->
+    <div class="about-image-col sr">
+      <div class="image-wrap">
+        <div class="image-frame">
+          <img src="assets/profile.jpeg" alt="Divine Dioulo" (error)="onImageError($event)" />
+          <span class="image-corner tl"></span>
+          <span class="image-corner br"></span>
+        </div>
+        <div class="status-badge">
+          <span class="status-dot"></span>
+          Disponible pour missions
+        </div>
+      </div>
+    </div>
+
+    <!-- Right — content -->
+    <div class="about-info">
+
+      <!-- Intro -->
+      <div class="sr">
+        <p class="section-label">BIO</p>
+        <h1 class="section-title">
+          About<br><span class="outline">Me.</span>
+        </h1>
+        <p class="bio-text">
+          Étudiante en développement logiciel à l'<strong>IIT Abidjan</strong>, je crée
+          des interfaces web et mobile modernes qui allient esthétique et performance.
+          Passionnée de design system et d'expérience utilisateur, je cherche
+          à pousser chaque projet au niveau d'un produit professionnel final.
+        </p>
+      </div>
+
+      <!-- Stats -->
+      <div class="stats-row sr">
+        <div class="stat">
+          <div class="stat-num">8<span>+</span></div>
+          <div class="stat-lbl">Projets</div>
+        </div>
+        <div class="stat">
+          <div class="stat-num">15<span>+</span></div>
+          <div class="stat-lbl">Technologies</div>
+        </div>
+        <div class="stat">
+          <div class="stat-num">2<span>+</span></div>
+          <div class="stat-lbl">Années exp.</div>
+        </div>
+      </div>
+
+      <!-- Skills -->
+      <div class="skills-block sr" [class.skills-section]="true">
+        <p class="skills-title">COMPÉTENCES</p>
+
+        <div class="skill-tabs">
+          <button class="skill-tab" [class.active]="activeSkillTab === 'languages'" (click)="activeSkillTab = 'languages'">Langages</button>
+          <button class="skill-tab" [class.active]="activeSkillTab === 'frameworks'" (click)="activeSkillTab = 'frameworks'">Frameworks</button>
+        </div>
+
+        <div class="skill-list" *ngIf="activeSkillTab === 'languages'">
+          <div class="skill-item" *ngFor="let sk of programmingLanguages">
+            <div class="skill-meta">
+              <span class="skill-name">{{ sk.name }}</span>
+              <span class="skill-pct">{{ sk.level }}%</span>
+            </div>
+            <div class="skill-bar">
+              <div class="skill-fill" [class.animated]="skillsVisible" [style.width.%]="sk.level"></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="skill-list" *ngIf="activeSkillTab === 'frameworks'">
+          <div class="skill-item" *ngFor="let sk of frameworks">
+            <div class="skill-meta">
+              <span class="skill-name">{{ sk.name }}</span>
+              <span class="skill-pct">{{ sk.level }}%</span>
+            </div>
+            <div class="skill-bar">
+              <div class="skill-fill" [class.animated]="skillsVisible" [style.width.%]="sk.level"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Tracks -->
+      <div class="sr">
+        <p class="skills-title">CE QUE J'ÉCOUTE EN CODANT</p>
+        <div class="tracks-grid">
+          <iframe
+            *ngFor="let url of trackUrls"
+            class="spotify-embed"
+            [src]="url"
+            width="100%"
+            height="80"
+            frameborder="0"
+            allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
+            loading="lazy">
+          </iframe>
+        </div>
+      </div>
+
+    </div><!-- /about-info -->
+  </div><!-- /about-grid -->
+
+</section>

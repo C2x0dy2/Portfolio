@@ -1,0 +1,119 @@
+<!-- Loader -->
+<div *ngIf="loading()" @loaderAnim class="loader" aria-live="polite">
+  <div class="loader-word">CONTACT</div>
+  <div class="loader-line"></div>
+</div>
+
+<!-- Contact Section -->
+<section *ngIf="!loading()" class="contact">
+
+  <!-- Nav -->
+  <nav class="nav-menu" aria-label="Navigation">
+    <a href="/">HOME</a>
+    <a href="/about">ABOUT</a>
+    <a href="/projects">PROJECTS</a>
+    <a href="/contact" class="active">CONTACT</a>
+  </nav>
+
+  <!-- Header -->
+  <div class="contact-header sr">
+    <div class="available-pill">
+      <span class="pulse-dot"></span>
+      Disponible pour missions freelance
+    </div>
+    <p class="section-label">CONTACT</p>
+    <h1 class="section-title">
+      Travaillons<br><span class="outline">Ensemble.</span>
+    </h1>
+  </div>
+
+  <!-- Two-col grid -->
+  <div class="contact-grid">
+
+    <!-- Left — info -->
+    <div class="contact-info sr">
+
+      <p class="info-intro">
+        Un projet en tête ? Une idée à concrétiser ?
+        N'hésitez pas à m'écrire — je réponds sous 24h.
+      </p>
+
+      <!-- Quick facts -->
+      <div class="quick-facts">
+        <div class="fact">
+          <div class="fact-icon">📍</div>
+          <span class="fact-text">Abidjan, Côte d'Ivoire</span>
+        </div>
+        <div class="fact">
+          <div class="fact-icon">📧</div>
+          <span class="fact-text">divineyoboukoi2005&#64;gmail.com</span>
+        </div>
+        <div class="fact">
+          <div class="fact-icon">📱</div>
+          <span class="fact-text">+225 01 43 82 94 94</span>
+        </div>
+      </div>
+
+      <!-- Social links -->
+      <div>
+        <p class="social-title">RÉSEAUX</p>
+        <div class="social-links">
+          <a class="social-link" [href]="socialLinks.linkedin" target="_blank" rel="noopener">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6zM2 9h4v12H2zm2-3a2 2 0 1 1 0-4 2 2 0 0 1 0 4z"/></svg>
+            LinkedIn
+          </a>
+          <a class="social-link" [href]="socialLinks.github" target="_blank" rel="noopener">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 .3a12 12 0 0 0-3.8 23.4c.6.1.8-.3.8-.6v-2c-3.3.7-4-1.6-4-1.6-.6-1.4-1.4-1.8-1.4-1.8-1-.7.1-.7.1-.7 1.1.1 1.7 1.1 1.7 1.1 1 1.8 2.8 1.3 3.5 1 .1-.8.4-1.3.7-1.6-2.7-.3-5.5-1.3-5.5-5.9 0-1.3.5-2.4 1.2-3.2 0-.4-.5-1.6.2-3.2 0 0 1-.3 3.3 1.2a11.5 11.5 0 0 1 6 0C17 4.7 18 5 18 5c.7 1.6.2 2.8.1 3.2.8.8 1.2 1.9 1.2 3.2 0 4.6-2.8 5.6-5.5 5.9.5.4.9 1.2.9 2.3v3.3c0 .3.2.7.8.6A12 12 0 0 0 12 .3"/></svg>
+            GitHub
+          </a>
+          <a class="social-link" [href]="socialLinks.instagram" target="_blank" rel="noopener">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+            Instagram
+          </a>
+          <a class="social-link" (click)="openWhatsApp()">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413z"/></svg>
+            WhatsApp
+          </a>
+        </div>
+      </div>
+
+    </div><!-- /contact-info -->
+
+    <!-- Right — form -->
+    <form class="contact-form sr" (ngSubmit)="onSubmit()" #contactForm="ngForm">
+
+      <div class="form-row">
+        <div class="form-group">
+          <label class="form-label" for="name">NOM</label>
+          <input class="form-input" id="name" type="text" name="name" placeholder="Votre nom" [(ngModel)]="formData.name" required />
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="email">EMAIL</label>
+          <input class="form-input" id="email" type="email" name="email" placeholder="votre@email.com" [(ngModel)]="formData.email" required />
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label" for="subject">SUJET</label>
+        <input class="form-input" id="subject" type="text" name="subject" placeholder="Objet du message" [(ngModel)]="formData.subject" required />
+      </div>
+
+      <div class="form-group">
+        <label class="form-label" for="message">MESSAGE</label>
+        <textarea class="form-textarea" id="message" name="message" placeholder="Décrivez votre projet..." [(ngModel)]="formData.message" required></textarea>
+      </div>
+
+      <div class="success-msg" *ngIf="showSuccess">
+        ✓ &nbsp;Message envoyé ! Je vous réponds sous 24h.
+      </div>
+
+      <button class="submit-btn" type="submit" [disabled]="isSubmitting">
+        <span>{{ isSubmitting ? 'ENVOI...' : 'ENVOYER' }}</span>
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m5 12 14 0M12 5l7 7-7 7"/></svg>
+      </button>
+
+    </form><!-- /contact-form -->
+
+  </div><!-- /contact-grid -->
+
+</section>
