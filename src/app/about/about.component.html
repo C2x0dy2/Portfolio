@@ -1,0 +1,294 @@
+<!-- Loading Screen -->
+<div *ngIf="loading()" @loaderAnim class="loader" aria-live="polite">
+  <div class="loader-content">
+    <div class="spinner"></div>
+    <div class="loader-text">
+      <span class="loader-greeting">À PROPOS</span>
+      <div class="loader-progress">
+        <div class="progress-bar"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- About Section -->
+<section *ngIf="!loading()" @aboutAnim class="about">
+  <!-- Éléments décoratifs en arrière-plan -->
+  <div class="bg-decoration">
+    <div class="circle circle-1"></div>
+    <div class="circle circle-2"></div>
+    <div class="circle circle-3"></div>
+    <div class="grid-lines"></div>
+  </div>
+
+  <div class="about-container">
+    <!-- Navigation avec effet de soulignement amélioré -->
+    <nav class="nav-menu" aria-label="Main navigation">
+      <a href="home" data-text="HOME">HOME</a>
+      <a href="about" class="active" data-text="ABOUT ME">ABOUT ME</a>
+      <a href="projects" data-text="PROJECTS">PROJECTS</a>
+      <a href="services" data-text="SERVICES">SERVICES</a>
+      <a href="contact" data-text="CONTACT">CONTACT</a>
+    </nav>
+
+    <!-- Titre de section avec animation -->
+    <div class="section-header">
+      <span class="section-subtitle">DÉCOUVREZ</span>
+      <h1 class="section-title">
+        <span class="title-word">QUI</span>
+        <span class="title-word gradient-text">JE</span>
+        <span class="title-word">SUIS</span>
+      </h1>
+      <div class="title-decoration">
+        <span class="line"></span>
+        <span class="dot"></span>
+        <span class="line"></span>
+      </div>
+    </div>
+
+    <div class="about-content">
+      <!-- Colonne gauche - Photo et informations personnelles -->
+      <div class="about-left">
+        <!-- Photo avec effets -->
+        <div class="about-image" aria-hidden="true">
+          <div class="image-wrapper">
+            <div class="image-frame">
+              <div class="frame-decoration"></div>
+              <img 
+                src="assets/Photo_Divine2.jpeg" 
+                alt="Divine Yoboukoi Dioulo"
+                loading="eager"
+                (error)="onImageError($event)">
+              <div class="image-overlay"></div>
+              <div class="image-glow"></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Coordonnées / Contact Cards -->
+        <div class="info-cards">
+          <div class="info-card" @cardAnim>
+            <div class="card-icon">📍</div>
+            <div class="card-content">
+              <span class="card-label">Localisation</span>
+              <span class="card-value">Abidjan, Côte d'Ivoire</span>
+            </div>
+          </div>
+
+          <div class="info-card" @cardAnim>
+            <div class="card-icon">🎓</div>
+            <div class="card-content">
+              <span class="card-label">Formation</span>
+              <span class="card-value">L3 Génie Logiciel</span>
+            </div>
+          </div>
+
+          <div class="info-card" @cardAnim>
+            <div class="card-icon">💼</div>
+            <div class="card-content">
+              <span class="card-label">Disponibilité</span>
+              <span class="card-value">Stage / Alternance</span>
+            </div>
+          </div>
+
+          <div class="info-card" @cardAnim>
+            <div class="card-icon">📧</div>
+            <div class="card-content">
+              <span class="card-label">Email</span>
+              <span class="card-value">divine.dioulo@iit.edu.ci</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Colonne droite - Biographie et compétences -->
+      <div class="about-right">
+        <!-- Introduction / Présentation -->
+        <div class="bio-section">
+          <h2 class="bio-title">
+            <span class="title-accent"></span>
+            Yoboukoi Dioulo Divine
+          </h2>
+          
+          <div class="bio-text" @textAnim>
+            <p class="bio-paragraph">
+              <span class="dropcap">J</span>e suis étudiante en 
+              <span class="highlight">Licence 3 en Génie Logiciel</span> à 
+              l'Institut Ivoirien de Technologie. Passionnée par le développement 
+              logiciel et les technologies web, je m'intéresse particulièrement 
+              à la création d'applications modernes, performantes et utiles.
+            </p>
+          </div>
+        </div>
+
+        <!-- Parcours académique avec timeline -->
+        <div class="education-section">
+          <h3 class="section-mini-title">
+            <span class="mini-icon">📚</span>
+            Parcours Académique
+          </h3>
+
+          <div class="timeline">
+            <div class="timeline-item" @timelineAnim>
+              <div class="timeline-dot"></div>
+              <div class="timeline-content">
+                <span class="timeline-date">2023 - 2026</span>
+                <h4 class="timeline-title">Licence en Génie Logiciel</h4>
+                <p class="timeline-description">Institut Ivoirien de Technologie (Bassam)</p>
+                <div class="timeline-badge">En cours - L3</div>
+              </div>
+            </div>
+
+            <div class="timeline-item" @timelineAnim>
+              <div class="timeline-dot"></div>
+              <div class="timeline-content">
+                <span class="timeline-date">2022 - 2023</span>
+                <h4 class="timeline-title">Baccalauréat A1</h4>
+                <p class="timeline-description">Pensionnat Méthodiste de Fille Anyama</p>
+                <div class="timeline-badge">Obtenu</div>
+              </div>
+            </div>
+
+            <div class="timeline-item" @timelineAnim>
+              <div class="timeline-dot"></div>
+              <div class="timeline-content">
+                <span class="timeline-date">2019 - 2020</span>
+                <h4 class="timeline-title">BEPC</h4>
+                <p class="timeline-description">Collège Sainte Rita de Bonoua</p>
+                <div class="timeline-badge">Obtenu</div>
+              </div>
+            </div>
+
+            <div class="timeline-item" @timelineAnim>
+              <div class="timeline-dot"></div>
+              <div class="timeline-content">
+                <span class="timeline-date">2015 - 2016</span>
+                <h4 class="timeline-title">CEPE</h4>
+                <p class="timeline-description">Ecole Primaire la Source, Koumassi</p>
+                <div class="timeline-badge">Obtenu</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Compétences techniques avec barres de progression -->
+        <div class="skills-section">
+          <h3 class="section-mini-title">
+            <span class="mini-icon">💻</span>
+            Compétences Techniques
+          </h3>
+
+          <div class="skills-category">
+            <h4 class="category-title">Langages</h4>
+            <div class="skills-grid">
+              <div class="skill-item" *ngFor="let skill of programmingLanguages; let i = index" 
+                   @skillAnim
+                   [style.animation-delay]="i * 0.1 + 's'">
+                <div class="skill-info">
+                  <span class="skill-name">{{ skill.name }}</span>
+                  <span class="skill-percentage">{{ skill.level }}%</span>
+                </div>
+                <div class="skill-progress">
+                  <div class="progress-fill" 
+                       [style.width.%]="skill.level"
+                       [style.background]="getSkillGradient(skill.level)">
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="skills-category">
+            <h4 class="category-title">Frameworks & Outils</h4>
+            <div class="skills-grid">
+              <div class="skill-item" *ngFor="let tool of frameworks; let i = index"
+                   @skillAnim
+                   [style.animation-delay]="(i + programmingLanguages.length) * 0.1 + 's'">
+                <div class="skill-info">
+                  <span class="skill-name">{{ tool.name }}</span>
+                  <span class="skill-percentage">{{ tool.level }}%</span>
+                </div>
+                <div class="skill-progress">
+                  <div class="progress-fill" 
+                       [style.width.%]="tool.level"
+                       [style.background]="getSkillGradient(tool.level)">
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Ce que je sais faire (Projets réalisés) -->
+        <div class="achievements-section">
+          <h3 class="section-mini-title">
+            <span class="mini-icon">🚀</span>
+            Ce que je réalise
+          </h3>
+
+          <div class="achievements-grid">
+            <div class="achievement-card" @cardHoverAnim>
+              <div class="achievement-icon">🌐</div>
+              <h4 class="achievement-title">Sites Web Dynamiques</h4>
+              <p class="achievement-description">
+                Création de sites web interactifs et responsifs avec HTML, CSS, JavaScript
+              </p>
+            </div>
+
+            <div class="achievement-card" @cardHoverAnim>
+              <div class="achievement-icon">⚙️</div>
+              <h4 class="achievement-title">Applications Django</h4>
+              <p class="achievement-description">
+                Développement d'applications web robustes avec le framework Django
+              </p>
+            </div>
+
+            <div class="achievement-card" @cardHoverAnim>
+              <div class="achievement-icon">📱</div>
+              <h4 class="achievement-title">Applications Flutter</h4>
+              <p class="achievement-description">
+                Création d'applications mobiles cross-platform avec Flutter
+              </p>
+            </div>
+
+            <div class="achievement-card" @cardHoverAnim>
+              <div class="achievement-icon">📦</div>
+              <h4 class="achievement-title">Modules Odoo</h4>
+              <p class="achievement-description">
+                Conception et personnalisation de modules pour Odoo
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Objectif professionnel -->
+        <div class="objective-section">
+          <div class="objective-card">
+            <div class="objective-icon">🎯</div>
+            <div class="objective-content">
+              <h3 class="objective-title">Objectif Professionnel</h3>
+              <p class="objective-text">
+                Mon objectif est de devenir développeuse logiciel senior et de participer 
+                à la conception de solutions technologiques innovantes. Je suis actuellement 
+                à la recherche d'opportunités de stage en développement logiciel afin de 
+                renforcer mes compétences et acquérir une expérience professionnelle.
+              </p>
+              <div class="objective-badge">
+                <span class="badge">À la recherche d'un stage</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Bouton CV -->
+        <div class="cta-container">
+          <a href="assets/cv-divine.pdf" download class="cta-button primary">
+            <span class="button-text">TÉLÉCHARGER MON CV</span>
+            <span class="button-icon">📄</span>
+            <span class="button-glow"></span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
