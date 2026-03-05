@@ -1,14 +1,7 @@
-import { Component, effect, signal } from '@angular/core';
+import { Component, signal, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { 
-  trigger, 
-  transition, 
-  style, 
-  animate, 
-  query, 
-  stagger,
-  keyframes 
-} from '@angular/animations';
+import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
+import { trigger, transition, style, animate } from '@angular/animations';
 
 @Component({
   selector: 'app-about',
@@ -17,99 +10,80 @@ import {
   templateUrl: './about.component.html',
   styleUrls: ['./about.component.css'],
   animations: [
-    trigger('aboutAnim', [
-      transition(':enter', [
-        query('.about-container > *', [
-          style({ opacity: 0, transform: 'translateY(40px)' }),
-          stagger(120, [
-            animate('700ms cubic-bezier(.77,0,.18,1)', style({ opacity: 1, transform: 'none' }))
-          ])
-        ])
-      ])
-    ]),
     trigger('loaderAnim', [
       transition(':leave', [
-        animate('600ms cubic-bezier(.77,0,.18,1)', style({ opacity: 0 }))
-      ])
-    ]),
-    trigger('cardAnim', [
-      transition(':enter', [
-        style({ opacity: 0, scale: 0.8, transform: 'translateY(20px)' }),
-        animate('400ms cubic-bezier(.68,-0.55,.27,1.55)', 
-          style({ opacity: 1, scale: 1, transform: 'translateY(0)' }))
-      ])
-    ]),
-    trigger('timelineAnim', [
-      transition(':enter', [
-        style({ opacity: 0, transform: 'translateX(-30px)' }),
-        animate('500ms ease-out', style({ opacity: 1, transform: 'translateX(0)' }))
-      ])
-    ]),
-    trigger('skillAnim', [
-      transition(':enter', [
-        style({ opacity: 0, transform: 'translateX(20px)' }),
-        animate('400ms ease-out', style({ opacity: 1, transform: 'translateX(0)' }))
-      ])
-    ]),
-    trigger('cardHoverAnim', [
-      transition(':enter', [
-        style({ opacity: 0, transform: 'scale(0.9)' }),
-        animate('300ms ease-out', style({ opacity: 1, transform: 'scale(1)' }))
-      ])
-    ]),
-    trigger('textAnim', [
-      transition(':enter', [
-        style({ opacity: 0, transform: 'translateY(20px)' }),
-        animate('600ms 200ms ease-out', style({ opacity: 1, transform: 'translateY(0)' }))
+        animate('600ms cubic-bezier(.77,0,.18,1)', style({ opacity: 0, transform: 'scale(1.05)' }))
       ])
     ])
   ]
 })
 export class AboutComponent {
+  private sanitizer = inject(DomSanitizer);
+
   loading = signal(true);
   prefersReducedMotion = false;
+  activeSkillTab = 'languages';
+  skillsVisible = false;
+  currentTrack = 0;
 
-  // Données pour les compétences
+  tracks = [
+    '3oTuTpF1F3A7rEC6RKsMRz',
+    '59SNPmcXGLAMAmnUqQw2ZH',
+    '6DH13QYXK7lKkYHSU88N48',
+    '1XBYiRV30ykHw5f4wm6qEn',
+    '3scdjQYPjXMQEmvEf0aXE7'
+  ];
+
+  trackUrls: SafeResourceUrl[] = [];
+
   programmingLanguages = [
-    { name: 'Python', level: 85 },
+    { name: 'HTML / CSS', level: 90 },
+    { name: 'Python',     level: 85 },
     { name: 'JavaScript', level: 80 },
-    { name: 'HTML/CSS', level: 90 },
-    { name: 'C', level: 70 }
+    { name: 'C',          level: 70 }
   ];
 
   frameworks = [
-    { name: 'Django', level: 75 },
-    { name: 'Flutter', level: 70 },
-    { name: 'Odoo', level: 65 },
-    { name: 'Git/GitHub', level: 80 }
+    { name: 'Git / GitHub', level: 80 },
+    { name: 'Django',       level: 75 },
+    { name: 'Flutter',      level: 70 },
+    { name: 'Odoo',         level: 65 }
   ];
 
   constructor() {
     if (typeof window !== 'undefined') {
       this.prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     }
-    
-    // Simulation du chargement
+
+    this.trackUrls = this.tracks.map(id =>
+      this.sanitizer.bypassSecurityTrustResourceUrl(
+        `https://open.spotify.com/embed/track/${id}?utm_source=generator&theme=0`
+      )
+    );
+
     setTimeout(() => {
       this.loading.set(false);
       setTimeout(() => this.setupScrollAnimations(), 200);
     }, 1600);
   }
 
+  nextTrack(): void {
+    this.currentTrack = (this.currentTrack + 1) % this.tracks.length;
+  }
+
+  prevTrack(): void {
+    this.currentTrack = (this.currentTrack - 1 + this.tracks.length) % this.tracks.length;
+  }
+
   getSkillGradient(level: number): string {
-    if (level >= 80) {
-      return 'linear-gradient(90deg, var(--primary), var(--secondary))';
-    } else if (level >= 60) {
-      return 'linear-gradient(90deg, var(--secondary), var(--accent))';
-    } else {
-      return 'linear-gradient(90deg, var(--primary-light), var(--primary))';
-    }
+    if (level >= 80) return 'linear-gradient(90deg, var(--primary), var(--secondary))';
+    if (level >= 60) return 'linear-gradient(90deg, var(--secondary), var(--accent))';
+    return 'linear-gradient(90deg, var(--primary-light), var(--primary))';
   }
 
   onImageError(event: Event) {
     const img = event.target as HTMLImageElement;
     img.style.display = 'none';
-    // Créer un fallback avec les initiales
     const parent = img.parentElement;
     if (parent) {
       const fallback = document.createElement('div');
@@ -126,17 +100,19 @@ export class AboutComponent {
       (entries) => {
         entries.forEach(entry => {
           if (entry.isIntersecting) {
-            const delay = (entry.target as HTMLElement).dataset['delay'] || '0';
-            (entry.target as HTMLElement).style.transitionDelay = `${delay}ms`;
-            entry.target.classList.add('is-visible');
-            observer.unobserve(entry.target);
+            const el = entry.target as HTMLElement;
+            el.style.transitionDelay = `${el.dataset['delay'] ?? '0'}ms`;
+            el.classList.add('is-visible');
+            if (el.classList.contains('skills-section')) {
+              this.skillsVisible = true;
+            }
+            observer.unobserve(el);
           }
         });
       },
-      { threshold: 0.1, rootMargin: '0px 0px -60px 0px' }
+      { threshold: 0.12, rootMargin: '0px 0px -60px 0px' }
     );
 
-    document.querySelectorAll('.scroll-reveal')
-      .forEach(el => observer.observe(el));
+    document.querySelectorAll('.scroll-reveal').forEach(el => observer.observe(el));
   }
 }

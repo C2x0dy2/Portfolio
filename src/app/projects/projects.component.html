@@ -1,0 +1,180 @@
+<!-- Loading Screen -->
+<div *ngIf="loading()" @loaderAnim class="loader" aria-live="polite">
+  <div class="loader-content">
+    <div class="spinner"></div>
+    <div class="loader-text">
+      <span class="loader-greeting">PROJETS</span>
+      <div class="loader-progress">
+        <div class="progress-bar"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Projects Section -->
+<section *ngIf="!loading()" @projectsAnim class="projects">
+  <!-- Éléments décoratifs -->
+  <div class="bg-decoration">
+    <div class="circle circle-1"></div>
+    <div class="circle circle-2"></div>
+    <div class="circle circle-3"></div>
+    <div class="grid-lines"></div>
+    <div class="floating-shapes">
+      <div class="shape shape-1"></div>
+      <div class="shape shape-2"></div>
+      <div class="shape shape-3"></div>
+      <div class="shape shape-4"></div>
+      <div class="shape shape-5"></div>
+    </div>
+    <div class="particles">
+      <span class="particle p1"></span>
+      <span class="particle p2"></span>
+      <span class="particle p3"></span>
+      <span class="particle p4"></span>
+      <span class="particle p5"></span>
+      <span class="particle p6"></span>
+    </div>
+  </div>
+
+  <div class="projects-container">
+    <!-- Navigation avec effet de soulignement amélioré -->
+    <nav class="nav-menu" aria-label="Main navigation">
+      <a href="/" data-text="HOME">HOME</a>
+      <a href="about" data-text="ABOUT ME">ABOUT ME</a>
+      <a href="projects" class="active"data-text="PROJECTS">PROJECTS</a>
+      <a href="services" data-text="SERVICES">SERVICES</a>
+      <a href="contact" data-text="CONTACT">CONTACT</a>
+    </nav>
+
+    <!-- Header -->
+    <div class="section-header scroll-reveal fade-up">
+      <span class="section-subtitle">MON PORTFOLIO</span>
+      <h1 class="section-title">
+        <span class="title-word">PROJETS</span>
+        <span class="title-word gradient-text">RÉALISÉS</span>
+      </h1>
+      <div class="title-decoration">
+        <span class="line"></span>
+        <span class="dot"></span>
+        <span class="line"></span>
+      </div>
+      <p class="section-description">
+        Découvrez l'ensemble de mes projets web et mobiles, réalisés avec différentes technologies.
+        <span class="note">* Certains projets sont en cours de développement</span>
+      </p>
+    </div>
+
+    <!-- Statistiques rapides -->
+    <div class="stats-container">
+      <div class="stat-card scroll-reveal scale-in" style="transition-delay:0.05s">
+        <span class="stat-number">{{ getTotalProjects() }}</span>
+        <span class="stat-label">Projets</span>
+      </div>
+      <div class="stat-card scroll-reveal scale-in" style="transition-delay:0.15s">
+        <span class="stat-number">{{ getWebProjects() }}</span>
+        <span class="stat-label">Sites Web</span>
+      </div>
+      <div class="stat-card scroll-reveal scale-in" style="transition-delay:0.25s">
+        <span class="stat-number">{{ getMobileProjects() }}</span>
+        <span class="stat-label">Apps Mobile</span>
+      </div>
+      <div class="stat-card scroll-reveal scale-in" style="transition-delay:0.35s">
+        <span class="stat-number">{{ getTechnologiesCount() }}</span>
+        <span class="stat-label">Technologies</span>
+      </div>
+    </div>
+
+    <!-- Filtres par catégorie -->
+    <div class="project-filters scroll-reveal fade-up" style="transition-delay:0.15s">
+      <button 
+        class="filter-btn" 
+        [class.active]="selectedCategory() === 'all'"
+        (click)="filterByCategory('all')">
+        Tous les projets
+      </button>
+      <button 
+        class="filter-btn" 
+        [class.active]="selectedCategory() === 'web'"
+        (click)="filterByCategory('web')">
+        <span class="filter-icon">🌐</span> Sites Web
+      </button>
+      <button 
+        class="filter-btn" 
+        [class.active]="selectedCategory() === 'mobile'"
+        (click)="filterByCategory('mobile')">
+        <span class="filter-icon">📱</span> Apps Mobile
+      </button>
+    </div>
+
+    <!-- Grille des projets -->
+    <div class="projects-grid">
+      <div [class]="'project-card scroll-reveal ' + (i % 2 === 0 ? 'slide-left' : 'slide-right')" 
+           *ngFor="let project of filteredProjects(); let i = index"
+           [style.transition-delay]="i * 0.1 + 's'">
+        
+        <!-- Shimmer sweep -->
+        <div class="card-shimmer"></div>
+
+        <!-- Accent top bar -->
+        <div class="card-accent" [style.background]="getProjectGradient(project.type)"></div>
+
+        <!-- En-tête de la carte -->
+        <div class="card-header">
+          <div class="project-icon" [style.background]="getProjectGradient(project.type)">
+            <span class="project-emoji">{{ getProjectEmoji(project.type) }}</span>
+          </div>
+          <div class="project-badges">
+            <span class="badge-year">{{ project.year }}</span>
+            <span class="badge-status" [class.deployed]="project.deployed">
+              {{ project.deployed ? '✅ Déployé' : '🔄 En développement' }}
+            </span>
+          </div>
+        </div>
+
+        <!-- Contenu principal -->
+        <div class="card-content">
+          <h3 class="project-title">{{ project.name }}</h3>
+          <p class="project-description">{{ project.description }}</p>
+
+          <!-- Technologies -->
+          <div class="project-tech">
+            <h4 class="tech-title">Technologies utilisées :</h4>
+            <div class="tech-tags">
+              <span class="tech-tag" *ngFor="let tech of project.technologies"
+                    [style.background]="getTechColor(tech)">
+                {{ tech }}
+              </span>
+            </div>
+          </div>
+
+          <!-- Fonctionnalités -->
+          <div class="project-features">
+            <h4 class="features-title">Fonctionnalités principales :</h4>
+            <ul class="features-list">
+              <li *ngFor="let feature of project.features">
+                <span class="feature-bullet">✦</span>
+                {{ feature }}
+              </li>
+            </ul>
+          </div>
+
+          <!-- Statut -->
+          <div class="project-status-bar" *ngIf="!project.deployed">
+            <span class="status-note">
+              <span class="note-icon">⏳</span> En cours de développement
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Note de fin -->
+    <div class="projects-footer scroll-reveal fade-up">
+      <div class="footer-note">
+        <span class="footer-icon">💡</span>
+        <p>L'ensemble de ces projets a été réalisé dans le cadre de ma formation ou de projets personnels. 
+           Ils reflètent mon apprentissage continu et ma passion pour le développement.</p>
+      </div>
+    </div>
+  </div>
+</section>
