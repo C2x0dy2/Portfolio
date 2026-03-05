@@ -1,0 +1,8 @@
+[build]
+builder = "nixpacks"
+buildCommand = "npm ci && npm run build"
+
+[deploy]
+startCommand = "node dist/portfolio-didi/server/server.mjs"
+healthcheckPath = "/"
+restartPolicyType = "on_failure"

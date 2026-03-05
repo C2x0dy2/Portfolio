@@ -1,0 +1,119 @@
+========================================
+  TUTO — LANCER LE PROJET EN LOCAL
+========================================
+
+PRÉREQUIS
+---------
+- Node.js + npm installés
+- Python 3 installé
+- Angular CLI : npm install -g @angular/cli
+
+
+========================================
+1. LANCER LE BACKEND (Django)
+========================================
+
+Ouvre un terminal et tape :
+
+    activer l'env virtuel
+    python manage.py runserver
+
+Le backend tourne sur : http://127.0.0.1:8000
+
+API disponible :
+  GET  http://127.0.0.1:8000/api/projects/
+  GET  http://127.0.0.1:8000/api/skills/
+  POST http://127.0.0.1:8000/api/contact/
+
+Admin Django : http://127.0.0.1:8000/admin/
+
+
+========================================
+2. LANCER LE FRONTEND (Angular)
+========================================
+
+Ouvre un 2ème terminal et tape :
+
+  ng serve
+
+Le site tourne sur : http://localhost:4200
+
+
+========================================
+3. REMETTRE LES DONNÉES EN BASE
+========================================
+
+Si la base de données est vide, relance le seed :
+
+  python seed.py
+
+Résultat attendu :
+  ✓ 8 projets créés
+  ✓ 8 skills créés
+  Base de données peuplée avec succès !
+
+
+========================================
+4. BUILDER POUR LA PROD
+========================================
+
+  cd "/Users/yohannvessime/Desktop/angular di/frontend"
+  ng build
+
+Les fichiers compilés seront dans : frontend/dist/
+
+
+========================================
+5. SI UN PORT EST DÉJÀ UTILISÉ
+========================================
+
+Libérer le port 8000 (backend) :
+  lsof -ti:8000 | xargs kill -9
+
+Libérer le port 4200 (frontend) :
+  lsof -ti:4200 | xargs kill -9
+
+
+========================================
+6. STRUCTURE DU PROJET
+========================================
+
+angular di/
+├── frontend/        → Angular (le site)
+│   └── src/app/
+│       ├── home/
+│       ├── about/
+│       ├── projects/
+│       ├── contact/
+│       ├── skills/
+│       └── api.service.ts  ← appels HTTP vers Django
+│
+├── backend/         → Django (l'API)
+│   ├── api/
+│   │   ├── models.py       ← Project, Skill, ContactMessage
+│   │   ├── serializers.py
+│   │   └── views.py
+│   ├── manage.py
+│   ├── seed.py             ← peuple la DB
+│   └── requirements.txt
+│
+└── TUTO.txt         ← ce fichier
+
+
+========================================
+7. DÉPENDANCES BACKEND
+========================================
+
+Installer depuis zéro :
+
+  cd "/Users/yohannvessime/Desktop/angular di/backend"
+  python3 -m venv venv
+  source venv/bin/activate
+  pip install -r requirements.txt
+  python manage.py migrate
+  python seed.py
+
+
+========================================
+FIN DU TUTO
+========================================

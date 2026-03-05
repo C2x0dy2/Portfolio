@@ -6,6 +6,7 @@ import {
 } from '@angular/ssr/node';
 import express from 'express';
 import { join } from 'node:path';
+import { createProxyMiddleware } from 'http-proxy-middleware';
 
 const browserDistFolder = join(import.meta.dirname, '../browser');
 
@@ -13,16 +14,16 @@ const app = express();
 const angularApp = new AngularNodeAppEngine();
 
 /**
- * Example Express Rest API endpoints can be defined here.
- * Uncomment and define endpoints as necessary.
- *
- * Example:
- * ```ts
- * app.get('/api/{*splat}', (req, res) => {
- *   // Handle API request
- * });
- * ```
+ * Proxy /api requests to the Django backend (Railway: set API_URL env var).
  */
+const API_URL = process.env['API_URL'] || 'http://127.0.0.1:8000';
+app.use(
+  '/api',
+  createProxyMiddleware({
+    target: API_URL,
+    changeOrigin: true,
+  }),
+);
 
 /**
  * Serve static files from /browser
