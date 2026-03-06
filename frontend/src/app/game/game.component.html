@@ -1,0 +1,108 @@
+<div class="game-page" @fadeIn>
+
+  <!-- Nav -->
+  <nav class="nav-menu" aria-label="Navigation">
+    <a href="/">Home</a>
+    <a href="about">About</a>
+    <a href="projects">Projects</a>
+    <a href="contact">Contact</a>
+    <a href="game" class="active">Game</a>
+  </nav>
+
+  <!-- Header -->
+  <header class="game-header">
+    <h1 class="game-title">
+      <span class="accent">Snake</span> Game
+    </h1>
+    <p class="game-subtitle">Utilise les flèches ou WASD pour jouer · SPACE pour pause</p>
+  </header>
+
+  <!-- Scoreboard -->
+  <div class="scoreboard">
+    <div class="score-card">
+      <span class="score-label">Score</span>
+      <span class="score-value">{{ score() }}</span>
+    </div>
+    <div class="score-card highlight">
+      <span class="score-label">Meilleur</span>
+      <span class="score-value">{{ bestScore() }}</span>
+    </div>
+    <div class="score-card">
+      <span class="score-label">Niveau</span>
+      <span class="score-value">{{ level() }}</span>
+    </div>
+    <div class="score-card lives">
+      <span class="score-label">Vies</span>
+      <span class="score-value">
+        <span *ngFor="let h of [].constructor(lives()); let i = index" class="heart">♥</span>
+        <span *ngFor="let h of [].constructor(3 - lives()); let i = index" class="heart lost">♥</span>
+      </span>
+    </div>
+  </div>
+
+  <!-- Canvas -->
+  <div class="canvas-wrapper">
+    <canvas #canvas class="game-canvas" tabindex="0"></canvas>
+
+    <!-- Overlay: idle -->
+    <div *ngIf="isIdle()" class="overlay">
+      <div class="overlay-card">
+        <div class="overlay-icon">🐍</div>
+        <h2>Snake</h2>
+        <p>Mange les 🍎 pour marquer des points.<br>
+           Les ⭐ bonus valent 50× le niveau !<br>
+           Tu as <strong>3 vies</strong>. Bonne chance !</p>
+        <button class="btn-start" (click)="startGame()">Jouer</button>
+        <p class="hint">ou appuie sur <kbd>SPACE</kbd></p>
+      </div>
+    </div>
+
+    <!-- Overlay: paused -->
+    <div *ngIf="isPaused()" class="overlay">
+      <div class="overlay-card">
+        <div class="overlay-icon">⏸</div>
+        <h2>Pause</h2>
+        <p>Score actuel : <strong>{{ score() }}</strong></p>
+        <button class="btn-start" (click)="togglePause()">Reprendre</button>
+      </div>
+    </div>
+
+    <!-- Overlay: game over -->
+    <div *ngIf="isOver()" class="overlay">
+      <div class="overlay-card">
+        <div class="overlay-icon">💀</div>
+        <h2>Game Over</h2>
+        <div class="result-grid">
+          <div><span>Score</span><strong>{{ score() }}</strong></div>
+          <div><span>Meilleur</span><strong>{{ bestScore() }}</strong></div>
+          <div><span>Niveau</span><strong>{{ level() }}</strong></div>
+        </div>
+        <button class="btn-start" (click)="startGame()">Rejouer</button>
+        <p class="hint">ou appuie sur <kbd>SPACE</kbd></p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Mobile controls -->
+  <div class="mobile-controls" aria-label="Contrôles tactiles">
+    <div class="ctrl-row">
+      <button class="ctrl-btn" (click)="onSwipe('UP')"    aria-label="Haut">▲</button>
+    </div>
+    <div class="ctrl-row">
+      <button class="ctrl-btn" (click)="onSwipe('LEFT')"  aria-label="Gauche">◀</button>
+      <button class="ctrl-btn center" (click)="togglePause()" aria-label="Pause">⏸</button>
+      <button class="ctrl-btn" (click)="onSwipe('RIGHT')" aria-label="Droite">▶</button>
+    </div>
+    <div class="ctrl-row">
+      <button class="ctrl-btn" (click)="onSwipe('DOWN')"  aria-label="Bas">▼</button>
+    </div>
+  </div>
+
+  <!-- Legend -->
+  <div class="legend">
+    <span>🍎 +{{ 10 * level() }} pts</span>
+    <span>⭐ +{{ 50 * level() }} pts (bonus 5s)</span>
+    <span>Vitesse augmente tous les 5 repas</span>
+  </div>
+
+</div>

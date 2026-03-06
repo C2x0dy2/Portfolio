@@ -9,4 +9,6 @@ export const routes: Routes = [
     data: { page: 2 } },
   { path: 'contact',  loadComponent: () => import('./contact/contact.component').then(m => m.ContactComponent),
     data: { page: 3 } },
+  { path: 'game',     loadComponent: () => import('./game/game.component').then(m => m.GameComponent),
+    data: { page: 4 } },
 ];
