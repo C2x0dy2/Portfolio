@@ -21,14 +21,24 @@
     <div class="about-image-col sr">
       <div class="image-wrap">
         <div class="image-frame">
-          <img src="assets/profile.jpeg" alt="Divine Dioulo" (error)="onImageError($event)" />
+          <img src="assets/Photo_Divine2.jpeg" alt="Divine Dioulo" (error)="onImageError($event)" />
           <span class="image-corner tl"></span>
           <span class="image-corner br"></span>
         </div>
-        <div class="status-badge">
-          <span class="status-dot"></span>
-          Disponible pour missions
+        <div class="badges-row">
+          <div class="status-badge">
+            <span class="status-dot"></span>
+            Disponible pour missions
+          </div>
+          <div class="status-badge status-badge--stage">
+            <span class="status-dot status-dot--stage"></span>
+            Ouverte aux stages
+          </div>
         </div>
+        <a href="assets/CV_Divine_Yoboukoi.pdf" download="CV_Divine_Dioulo.pdf" class="cv-btn">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+          Télécharger mon CV
+        </a>
       </div>
     </div>
 
@@ -96,6 +106,82 @@
               <div class="skill-fill" [class.animated]="skillsVisible" [style.width.%]="sk.level"></div>
             </div>
           </div>
+        </div>
+      </div>
+
+      <!-- Formation -->
+      <div class="sr">
+        <p class="skills-title">FORMATION</p>
+        <div class="timeline">
+
+          <div class="tl-item">
+            <div class="tl-dot tl-dot--active"></div>
+            <div class="tl-body">
+              <span class="tl-year">2023 — en cours</span>
+              <p class="tl-role">L1 · L2 · L3 <span class="tl-badge">L3 en cours</span></p>
+              <p class="tl-place">Institut Ivoirien de Technologie &nbsp;·&nbsp; Grand-Bassam</p>
+            </div>
+          </div>
+
+          <div class="tl-item">
+            <div class="tl-dot"></div>
+            <div class="tl-body">
+              <span class="tl-year">2022 — 2023</span>
+              <p class="tl-role">Baccalauréat A1</p>
+              <p class="tl-place">Pensionnat Méthodiste de Filles &nbsp;·&nbsp; Anyama</p>
+            </div>
+          </div>
+
+          <div class="tl-item">
+            <div class="tl-dot"></div>
+            <div class="tl-body">
+              <span class="tl-year">2019 — 2020</span>
+              <p class="tl-role">BEPC</p>
+              <p class="tl-place">Collège Sainte Rita &nbsp;·&nbsp; Bonoua</p>
+            </div>
+          </div>
+
+          <div class="tl-item">
+            <div class="tl-dot"></div>
+            <div class="tl-body">
+              <span class="tl-year">2015 — 2016</span>
+              <p class="tl-role">CEPE</p>
+              <p class="tl-place">École Privée La Source &nbsp;·&nbsp; Koumassi</p>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- Services -->
+      <div class="sr">
+        <p class="skills-title">CE QUE JE FAIS</p>
+        <div class="services-grid">
+
+          <div class="service-card">
+            <div class="service-icon">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
+            </div>
+            <p class="service-name">Développement Web</p>
+            <p class="service-desc">Interfaces modernes et responsives avec Angular, HTML / CSS et Python Django.</p>
+          </div>
+
+          <div class="service-card">
+            <div class="service-icon">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="5" y="2" width="14" height="20" rx="2"/><line x1="12" y1="18" x2="12" y2="18.01"/></svg>
+            </div>
+            <p class="service-name">Développement Mobile</p>
+            <p class="service-desc">Applications cross-platform fluides et performantes avec Flutter.</p>
+          </div>
+
+          <div class="service-card">
+            <div class="service-icon">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="3"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14"/><path d="M4.93 4.93a10 10 0 0 0 0 14.14"/></svg>
+            </div>
+            <p class="service-name">UI / UX Design</p>
+            <p class="service-desc">Maquettes soignées, design system cohérent et expérience utilisateur intuitive.</p>
+          </div>
+
         </div>
       </div>
 
