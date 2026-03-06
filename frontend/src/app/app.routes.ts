@@ -11,4 +11,6 @@ export const routes: Routes = [
     data: { page: 3 } },
   { path: 'game',     loadComponent: () => import('./game/game.component').then(m => m.GameComponent),
     data: { page: 4 } },
+  { path: 'quiz',     loadComponent: () => import('./quiz-ivoirien/quiz-ivoirien.component').then(m => m.QuizIvoirienComponent),
+    data: { page: 5 } },
 ];

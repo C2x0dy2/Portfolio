@@ -1,0 +1,219 @@
+<div class="quiz-page">
+
+  <!-- ─── Nav ─── -->
+  <nav class="nav-menu" aria-label="Navigation">
+    <a href="/">Home</a>
+    <a href="/about">About</a>
+    <a href="/projects">Projects</a>
+    <a href="/contact">Contact</a>
+    <a href="/game">Game 🎮</a>
+    <a href="/quiz" class="active">Quiz 🇨🇮</a>
+  </nav>
+
+  <!-- ══════════════════════════════════════════════
+       SCREEN — HOME
+  ══════════════════════════════════════════════ -->
+  <div *ngIf="screen() === 'home'" @fadeUp class="screen home-screen">
+
+    <div class="quiz-logo">🇨🇮</div>
+    <h1 class="quiz-title">
+      Quiz <span class="accent">Ivoirien</span>
+    </h1>
+    <p class="quiz-sub">Tu connais le nouchi et le Dioula ? Prouve-le !</p>
+
+    <!-- Rules -->
+    <div class="rules-grid">
+      <div class="rule-card">
+        <span class="rule-icon">⏱</span>
+        <span>15 secondes par question</span>
+      </div>
+      <div class="rule-card">
+        <span class="rule-icon">🚀</span>
+        <span>Plus tu réponds vite, plus tu marques de points</span>
+      </div>
+      <div class="rule-card">
+        <span class="rule-icon">🏆</span>
+        <span>Classement en temps réel des meilleurs joueurs</span>
+      </div>
+      <div class="rule-card">
+        <span class="rule-icon">🎯</span>
+        <span>10 questions tirées aléatoirement</span>
+      </div>
+    </div>
+
+    <!-- Name input -->
+    <div class="name-wrap">
+      <input
+        class="name-input"
+        type="text"
+        placeholder="Ton prénom pour le classement…"
+        [value]="playerName()"
+        (input)="onNameInput($any($event.target).value)"
+        (keydown.enter)="startQuiz()"
+        maxlength="20"
+        aria-label="Ton prénom"
+      />
+      <p *ngIf="nameError()" class="name-error">{{ nameError() }}</p>
+    </div>
+
+    <div class="home-actions">
+      <button class="btn-primary" (click)="startQuiz()">Commencer le Quiz</button>
+      <button class="btn-ghost" (click)="screen.set('leaderboard')">Voir le classement 🏆</button>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════════
+       SCREEN — QUIZ
+  ══════════════════════════════════════════════ -->
+  <div *ngIf="screen() === 'quiz' && currentQ()" @fadeUp class="screen quiz-screen">
+
+    <!-- Progress bar -->
+    <div class="progress-bar-wrap">
+      <div class="progress-bar" [style.width.%]="progressPct()"></div>
+    </div>
+
+    <!-- Header row -->
+    <div class="quiz-meta">
+      <span class="q-counter">{{ currentIndex() + 1 }} / {{ questions.length }}</span>
+      <span class="q-score">{{ score() }} pts</span>
+    </div>
+
+    <!-- Timer -->
+    <div class="timer-wrap">
+      <div
+        class="timer-ring"
+        [class.warn]="timeLeft() <= 8"
+        [class.danger]="timeLeft() <= 4"
+      >
+        <span class="timer-num">{{ timeLeft() }}</span>
+      </div>
+      <div class="timer-track">
+        <div
+          class="timer-fill"
+          [style.width.%]="timerPct()"
+          [style.background]="timerColor"
+        ></div>
+      </div>
+    </div>
+
+    <!-- Question -->
+    <div class="question-card">
+      <div class="question-emoji">{{ currentQ()!.emoji }}</div>
+      <p class="question-text">{{ currentQ()!.question }}</p>
+    </div>
+
+    <!-- Choices -->
+    <div class="choices-grid">
+      <button
+        *ngFor="let choice of currentQ()!.choices; let i = index"
+        class="choice-btn"
+        [class]="getChoiceClass(i)"
+        [disabled]="selected() !== null"
+        (click)="choose(i)"
+      >
+        <span class="choice-letter">{{ ['A','B','C','D'][i] }}</span>
+        <span class="choice-text">{{ choice }}</span>
+        <span *ngIf="selected() !== null && i === currentQ()!.answer" class="choice-icon">✓</span>
+        <span *ngIf="selected() !== null && i === selected() && i !== currentQ()!.answer" class="choice-icon">✗</span>
+      </button>
+    </div>
+
+    <!-- Explanation -->
+    <div *ngIf="showExplain()" @pop class="explanation"
+         [class.correct-bg]="isCorrect()" [class.wrong-bg]="!isCorrect()">
+      <span class="expl-icon">{{ isCorrect() ? '🎉' : '💡' }}</span>
+      <div>
+        <strong>{{ isCorrect() ? 'Bonne réponse !' : 'Ah non hein !' }}</strong>
+        <p>{{ currentQ()!.explanation }}</p>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- ══════════════════════════════════════════════
+       SCREEN — FINAL
+  ══════════════════════════════════════════════ -->
+  <div *ngIf="screen() === 'final'" @pop class="screen final-screen">
+
+    <div class="result-emoji">{{ correctCount() === questions.length ? '👑' : correctCount() >= 7 ? '🥳' : '😅' }}</div>
+    <h2 class="result-rank">{{ rank }}</h2>
+    <p class="result-name">{{ playerName() }}</p>
+
+    <div class="result-stats">
+      <div class="stat">
+        <span class="stat-val accent">{{ score() }}</span>
+        <span class="stat-lbl">Points</span>
+      </div>
+      <div class="stat">
+        <span class="stat-val">{{ correctCount() }}/{{ questions.length }}</span>
+        <span class="stat-lbl">Bonnes réponses</span>
+      </div>
+      <div class="stat">
+        <span class="stat-val">{{ formatDur(totalSecs) }}</span>
+        <span class="stat-lbl">Temps total</span>
+      </div>
+    </div>
+
+    <!-- Top 3 mini leaderboard -->
+    <div *ngIf="leaderboard().length > 0" class="mini-lb">
+      <h3>🏆 Top classement</h3>
+      <div class="lb-row" *ngFor="let e of leaderboard().slice(0, 3); let i = index"
+           [class.me]="e.name === playerName() && e.score === score()">
+        <span class="lb-rank">{{ getRankBadge(i) }}</span>
+        <span class="lb-name">{{ e.name }}</span>
+        <span class="lb-score">{{ e.score }} pts</span>
+        <span class="lb-time">{{ formatDur(e.duration) }}</span>
+      </div>
+    </div>
+
+    <div class="final-actions">
+      <button class="btn-primary" (click)="startQuiz()">Rejouer 🔄</button>
+      <button class="btn-ghost" (click)="screen.set('leaderboard')">Classement complet 🏆</button>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════════
+       SCREEN — LEADERBOARD
+  ══════════════════════════════════════════════ -->
+  <div *ngIf="screen() === 'leaderboard'" @fadeUp class="screen lb-screen">
+
+    <h2 class="lb-title">🏆 Classement</h2>
+    <p class="lb-sub">Les meilleurs joueurs à ce jour</p>
+
+    <div *ngIf="leaderboard().length === 0" class="lb-empty">
+      <span>Aucun score enregistré.</span>
+      <span>Sois le premier à jouer ! 🎯</span>
+    </div>
+
+    <div class="lb-table" *ngIf="leaderboard().length > 0">
+      <div class="lb-head">
+        <span>#</span>
+        <span>Joueur</span>
+        <span>Score</span>
+        <span>Réponses</span>
+        <span>Temps</span>
+        <span>Date</span>
+      </div>
+      <div
+        class="lb-row"
+        *ngFor="let e of leaderboard(); let i = index"
+        [class.gold]="i === 0" [class.silver]="i === 1" [class.bronze]="i === 2"
+      >
+        <span class="lb-badge">{{ getRankBadge(i) }}</span>
+        <span class="lb-pname">{{ e.name }}</span>
+        <span class="lb-pts">{{ e.score }}</span>
+        <span class="lb-correct">{{ e.correct }}/{{ e.total }}</span>
+        <span class="lb-dur">{{ formatDur(e.duration) }}</span>
+        <span class="lb-date">{{ e.date }}</span>
+      </div>
+    </div>
+
+    <div class="lb-actions">
+      <button class="btn-primary" (click)="screen.set('home')">Jouer 🎮</button>
+      <button class="btn-danger" *ngIf="leaderboard().length > 0" (click)="resetLB()">
+        Réinitialiser
+      </button>
+    </div>
+  </div>
+
+</div>
