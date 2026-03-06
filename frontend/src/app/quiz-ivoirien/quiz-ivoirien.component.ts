@@ -320,11 +320,21 @@ export class QuizIvoirienComponent implements OnInit, OnDestroy {
       duration: this.totalSecs,
       date:     new Date().toLocaleDateString('fr-FR')
     };
-    const lb = [...this.leaderboard(), entry]
-      .sort((a, b) => b.score - a.score || a.duration - b.duration)
-      .slice(0, 10);
-    this.leaderboard.set(lb);
-    try { localStorage.setItem(LS_KEY, JSON.stringify(lb)); } catch {}
+    const existing = this.leaderboard();
+    const idx = existing.findIndex(
+      e => e.name.toLowerCase() === entry.name.toLowerCase()
+    );
+    let updated: LeaderScore[];
+    if (idx >= 0) {
+      // Keep only the best score per player
+      updated = [...existing];
+      if (entry.score > existing[idx].score) updated[idx] = entry;
+    } else {
+      updated = [...existing, entry];
+    }
+    updated = updated.sort((a, b) => b.score - a.score || a.duration - b.duration);
+    this.leaderboard.set(updated);
+    try { localStorage.setItem(LS_KEY, JSON.stringify(updated)); } catch {}
   }
 
   private loadLB() {

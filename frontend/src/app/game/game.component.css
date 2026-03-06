@@ -197,6 +197,118 @@ kbd {
   font-size: .8rem;
 }
 
+/* ─── Header leaderboard button ─── */
+.game-header { position: relative; }
+.btn-lb {
+  margin-top: .6rem;
+  background: transparent;
+  color: var(--cream-dim);
+  border: 1px solid var(--border);
+  padding: .4rem 1.2rem;
+  border-radius: 50px;
+  font-family: var(--font-body);
+  font-size: .8rem;
+  cursor: pointer;
+  transition: color .2s, border-color .2s, background .2s;
+}
+.btn-lb:hover { color: var(--cream); border-color: rgba(59,130,246,.5); background: rgba(59,130,246,.1); }
+
+/* ─── Name input inside overlay ─── */
+.name-wrap { width: 100%; display: flex; flex-direction: column; gap: .3rem; }
+.name-input {
+  width: 100%;
+  background: rgba(59,130,246,.07);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: .65rem 1rem;
+  color: var(--cream);
+  font-family: var(--font-body);
+  font-size: .95rem;
+  outline: none;
+  transition: border-color .2s;
+  text-align: center;
+}
+.name-input::placeholder { color: var(--cream-dim); }
+.name-input:focus { border-color: rgba(59,130,246,.5); }
+.name-error { color: #EF4444; font-size: .78rem; text-align: center; }
+
+/* ─── Ghost small button ─── */
+.btn-ghost-sm {
+  background: transparent;
+  color: var(--cream-dim);
+  border: 1px solid var(--border);
+  padding: .5rem 1.2rem;
+  border-radius: 50px;
+  font-family: var(--font-body);
+  font-size: .82rem;
+  cursor: pointer;
+  transition: color .2s, border-color .2s;
+}
+.btn-ghost-sm:hover { color: var(--cream); border-color: rgba(59,130,246,.4); }
+
+/* ─── Danger button ─── */
+.btn-danger {
+  background: transparent;
+  color: #EF4444;
+  border: 1px solid rgba(239,68,68,.4);
+  padding: .5rem 1.2rem;
+  border-radius: 50px;
+  font-family: var(--font-body);
+  font-size: .82rem;
+  cursor: pointer;
+  transition: background .2s;
+}
+.btn-danger:hover { background: rgba(239,68,68,.1); }
+
+/* ─── Leaderboard overlay ─── */
+.lb-overlay { align-items: flex-start; padding: 1rem; overflow-y: auto; }
+.lb-card {
+  width: 100%;
+  max-width: 380px;
+  max-height: 80vh;
+  overflow-y: auto;
+  gap: .8rem;
+  padding: 1.5rem 1.2rem;
+}
+.lb-card h2 {
+  font-family: var(--font-display);
+  font-size: 1.5rem;
+  font-weight: 700;
+}
+.lb-empty { color: var(--cream-dim); font-size: .88rem; }
+.lb-actions { display: flex; gap: .8rem; flex-wrap: wrap; justify-content: center; }
+
+.lb-table {
+  width: 100%;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  overflow: hidden;
+}
+.lb-head,
+.lb-row {
+  display: grid;
+  grid-template-columns: 36px 1fr 64px 50px 62px;
+  align-items: center;
+  padding: .55rem .8rem;
+  gap: .3rem;
+  font-size: .8rem;
+}
+.lb-head {
+  background: rgba(59,130,246,.12);
+  color: var(--cream-dim);
+  font-size: .68rem;
+  text-transform: uppercase;
+  letter-spacing: .07em;
+}
+.lb-row { border-top: 1px solid var(--border); }
+.lb-row.gold   { background: rgba(255,215,0,.06); }
+.lb-row.silver { background: rgba(192,192,192,.05); }
+.lb-row.bronze { background: rgba(205,127,50,.05); }
+.lb-badge { font-size: 1rem; }
+.lb-name  { font-weight: 500; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.lb-score { font-weight: 700; color: var(--accent); }
+.lb-level, .lb-date { color: var(--cream-dim); font-size: .75rem; }
+
 /* ─── Mobile controls ─── */
 .mobile-controls {
   display: none;

@@ -3,19 +3,28 @@ import {
   OnDestroy, HostListener, signal, computed
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { trigger, transition, style, animate } from '@angular/animations';
 
 const GRID = 20;
 const CELL = 20;
+const LS_SNAKE = 'snake-leaderboard';
 
 type Dir = 'UP' | 'DOWN' | 'LEFT' | 'RIGHT';
 interface Point { x: number; y: number; }
 
+interface SnakeScore {
+  name: string;
+  score: number;
+  level: number;
+  date: string;
+}
+
 @Component({
   selector: 'app-game',
   standalone: true,
-  imports: [CommonModule, RouterModule],
+  imports: [CommonModule, FormsModule, RouterModule],
   templateUrl: './game.component.html',
   styleUrls: ['./game.component.css'],
   animations: [
@@ -30,11 +39,15 @@ interface Point { x: number; y: number; }
 export class GameComponent implements AfterViewInit, OnDestroy {
   @ViewChild('canvas') canvasRef!: ElementRef<HTMLCanvasElement>;
 
-  score     = signal(0);
-  bestScore = signal(0);
-  lives     = signal(3);
-  level     = signal(1);
-  state     = signal<'idle' | 'running' | 'paused' | 'over'>('idle');
+  score           = signal(0);
+  bestScore       = signal(0);
+  lives           = signal(3);
+  level           = signal(1);
+  state           = signal<'idle' | 'running' | 'paused' | 'over'>('idle');
+  playerName      = signal('');
+  nameError       = signal('');
+  leaderboard     = signal<SnakeScore[]>([]);
+  showLeaderboard = signal(false);
 
   isPaused  = computed(() => this.state() === 'paused');
   isOver    = computed(() => this.state() === 'over');
@@ -63,19 +76,27 @@ export class GameComponent implements AfterViewInit, OnDestroy {
     canvas.height = GRID * CELL;
     this.ctx = canvas.getContext('2d')!;
     this.drawIdle();
-
-    const saved = localStorage.getItem('snake-best');
-    if (saved) this.bestScore.set(+saved);
+    this.loadLB();
   }
 
   ngOnDestroy() { this.stopLoop(); }
 
   // ─── Controls ───────────────────────────────────────────────
+  onNameInput(val: string) {
+    this.playerName.set(val.slice(0, 20));
+    this.nameError.set('');
+  }
+
   startGame() {
+    if (!this.playerName().trim()) {
+      this.nameError.set('Entre ton prénom pour jouer ! 😄');
+      return;
+    }
     this.score.set(0);
     this.lives.set(3);
     this.level.set(1);
     this.frameCount = 0;
+    this.showLeaderboard.set(false);
     this.initSnake();
     this.placeFood();
     this.state.set('running');
@@ -106,8 +127,9 @@ export class GameComponent implements AfterViewInit, OnDestroy {
       if (map[e.key] !== opp[this.dir]) this.nextDir = map[e.key];
     }
     if (e.key === ' ') {
-      if (this.state() === 'over' || this.state() === 'idle') this.startGame();
-      else this.togglePause();
+      if (this.state() === 'over') this.startGame();
+      else if (this.state() === 'idle' && this.playerName().trim()) this.startGame();
+      else if (this.state() === 'running' || this.state() === 'paused') this.togglePause();
     }
   }
 
@@ -213,8 +235,9 @@ export class GameComponent implements AfterViewInit, OnDestroy {
     this.lives.update(l => l - 1);
     if (this.lives() <= 0) {
       this.stopLoop();
-      this.state.set('over');
       this.updateBest();
+      this.saveToLB();
+      this.state.set('over');
       this.drawGameOver();
     } else {
       this.stopLoop();
@@ -251,10 +274,53 @@ export class GameComponent implements AfterViewInit, OnDestroy {
 
   private updateBest() {
     const s = this.score();
-    if (s > this.bestScore()) {
-      this.bestScore.set(s);
-      localStorage.setItem('snake-best', String(s));
+    if (s > this.bestScore()) this.bestScore.set(s);
+  }
+
+  private saveToLB() {
+    const entry: SnakeScore = {
+      name:  this.playerName().trim(),
+      score: this.score(),
+      level: this.level(),
+      date:  new Date().toLocaleDateString('fr-FR')
+    };
+    const existing = this.leaderboard();
+    const idx = existing.findIndex(
+      e => e.name.toLowerCase() === entry.name.toLowerCase()
+    );
+    let updated: SnakeScore[];
+    if (idx >= 0) {
+      // Keep only best score per player
+      updated = [...existing];
+      if (entry.score > existing[idx].score) updated[idx] = entry;
+    } else {
+      updated = [...existing, entry];
     }
+    updated = updated.sort((a, b) => b.score - a.score);
+    this.leaderboard.set(updated);
+    try { localStorage.setItem(LS_SNAKE, JSON.stringify(updated)); } catch {}
+  }
+
+  private loadLB() {
+    try {
+      const raw = localStorage.getItem(LS_SNAKE);
+      if (raw) {
+        const lb: SnakeScore[] = JSON.parse(raw);
+        this.leaderboard.set(lb);
+        const best = lb.reduce((m, e) => Math.max(m, e.score), 0);
+        this.bestScore.set(best);
+      }
+    } catch {}
+  }
+
+  getRankBadge(i: number): string {
+    return ['🥇','🥈','🥉'][i] ?? `#${i + 1}`;
+  }
+
+  resetLB() {
+    this.leaderboard.set([]);
+    this.bestScore.set(0);
+    try { localStorage.removeItem(LS_SNAKE); } catch {}
   }
 
   // ─── Drawing ─────────────────────────────────────────────────

@@ -16,6 +16,7 @@
       <span class="accent">Snake</span> Game
     </h1>
     <p class="game-subtitle">Utilise les flèches ou WASD pour jouer · SPACE pour pause</p>
+    <button class="btn-lb" (click)="showLeaderboard.set(!showLeaderboard())">🏆 Classement</button>
   </header>
 
   <!-- Scoreboard -->
@@ -46,13 +47,26 @@
     <canvas #canvas class="game-canvas" tabindex="0"></canvas>
 
     <!-- Overlay: idle -->
-    <div *ngIf="isIdle()" class="overlay">
+    <div *ngIf="isIdle() && !showLeaderboard()" class="overlay">
       <div class="overlay-card">
         <div class="overlay-icon">🐍</div>
         <h2>Snake</h2>
         <p>Mange les 🍎 pour marquer des points.<br>
            Les ⭐ bonus valent 50× le niveau !<br>
            Tu as <strong>3 vies</strong>. Bonne chance !</p>
+        <div class="name-wrap">
+          <input
+            class="name-input"
+            type="text"
+            placeholder="Ton prénom..."
+            [value]="playerName()"
+            (input)="onNameInput($any($event.target).value)"
+            (keydown.enter)="startGame()"
+            maxlength="20"
+            aria-label="Ton prénom"
+          />
+          <p *ngIf="nameError()" class="name-error">{{ nameError() }}</p>
+        </div>
         <button class="btn-start" (click)="startGame()">Jouer</button>
         <p class="hint">ou appuie sur <kbd>SPACE</kbd></p>
       </div>
@@ -79,7 +93,34 @@
           <div><span>Niveau</span><strong>{{ level() }}</strong></div>
         </div>
         <button class="btn-start" (click)="startGame()">Rejouer</button>
+        <button class="btn-ghost-sm" (click)="showLeaderboard.set(true); state.set('idle')">Voir classement 🏆</button>
         <p class="hint">ou appuie sur <kbd>SPACE</kbd></p>
+      </div>
+    </div>
+
+    <!-- Overlay: leaderboard -->
+    <div *ngIf="showLeaderboard()" class="overlay lb-overlay">
+      <div class="overlay-card lb-card">
+        <h2>🏆 Classement Snake</h2>
+        <div *ngIf="leaderboard().length === 0" class="lb-empty">Aucun score encore. Sois le premier !</div>
+        <div class="lb-table" *ngIf="leaderboard().length > 0">
+          <div class="lb-head">
+            <span>#</span><span>Joueur</span><span>Score</span><span>Niveau</span><span>Date</span>
+          </div>
+          <div class="lb-row"
+            *ngFor="let e of leaderboard(); let i = index"
+            [class.gold]="i===0" [class.silver]="i===1" [class.bronze]="i===2">
+            <span class="lb-badge">{{ getRankBadge(i) }}</span>
+            <span class="lb-name">{{ e.name }}</span>
+            <span class="lb-score">{{ e.score }}</span>
+            <span class="lb-level">Niv.{{ e.level }}</span>
+            <span class="lb-date">{{ e.date }}</span>
+          </div>
+        </div>
+        <div class="lb-actions">
+          <button class="btn-start" (click)="showLeaderboard.set(false)">Fermer</button>
+          <button class="btn-danger" *ngIf="leaderboard().length > 0" (click)="resetLB()">Réinitialiser</button>
+        </div>
       </div>
     </div>
   </div>
