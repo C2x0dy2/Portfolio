@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import Project, Skill, ContactMessage
+from .models import Project, Skill, ContactMessage, LeaderboardEntry
 
 
 class ProjectSerializer(serializers.ModelSerializer):
@@ -19,3 +19,11 @@ class ContactMessageSerializer(serializers.ModelSerializer):
         model = ContactMessage
         fields = ['id', 'name', 'email', 'subject', 'message', 'created_at']
         read_only_fields = ['id', 'created_at']
+
+
+class LeaderboardEntrySerializer(serializers.ModelSerializer):
+    class Meta:
+        model = LeaderboardEntry
+        fields = ['id', 'game', 'player_name', 'score', 'level',
+                  'correct', 'total', 'duration', 'updated_at']
+        read_only_fields = ['id', 'updated_at']

@@ -56,3 +56,28 @@ class ContactMessage(models.Model):
 
     class Meta:
         ordering = ['-created_at']
+
+
+class LeaderboardEntry(models.Model):
+    GAME_CHOICES = [
+        ('snake', 'Snake'),
+        ('quiz', 'Quiz Ivoirien'),
+    ]
+
+    game        = models.CharField(max_length=10, choices=GAME_CHOICES)
+    player_name = models.CharField(max_length=50)
+    score       = models.IntegerField(default=0)
+    # Snake extras
+    level       = models.IntegerField(default=1)
+    # Quiz extras
+    correct     = models.IntegerField(default=0)
+    total       = models.IntegerField(default=0)
+    duration    = models.IntegerField(default=0)  # seconds
+    created_at  = models.DateTimeField(auto_now_add=True)
+    updated_at  = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return f"[{self.game}] {self.player_name} — {self.score}"
+
+    class Meta:
+        ordering = ['-score', 'duration']
