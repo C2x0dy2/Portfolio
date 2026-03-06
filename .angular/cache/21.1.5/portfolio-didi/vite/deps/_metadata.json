@@ -1,0 +1,67 @@
+{
+  "hash": "23583657",
+  "configHash": "823fc674",
+  "lockfileHash": "7be9851f",
+  "browserHash": "c7c4f98c",
+  "optimized": {
+    "@angular/animations": {
+      "src": "../../../../../../node_modules/@angular/animations/fesm2022/animations.mjs",
+      "file": "@angular_animations.js",
+      "fileHash": "e47e8851",
+      "needsInterop": false
+    },
+    "@angular/common": {
+      "src": "../../../../../../node_modules/@angular/common/fesm2022/common.mjs",
+      "file": "@angular_common.js",
+      "fileHash": "acde1f30",
+      "needsInterop": false
+    },
+    "@angular/core": {
+      "src": "../../../../../../node_modules/@angular/core/fesm2022/core.mjs",
+      "file": "@angular_core.js",
+      "fileHash": "85188da1",
+      "needsInterop": false
+    },
+    "@angular/platform-browser": {
+      "src": "../../../../../../node_modules/@angular/platform-browser/fesm2022/platform-browser.mjs",
+      "file": "@angular_platform-browser.js",
+      "fileHash": "66f453fa",
+      "needsInterop": false
+    },
+    "@angular/platform-browser/animations": {
+      "src": "../../../../../../node_modules/@angular/platform-browser/fesm2022/animations.mjs",
+      "file": "@angular_platform-browser_animations.js",
+      "fileHash": "057cbc19",
+      "needsInterop": false
+    },
+    "@angular/router": {
+      "src": "../../../../../../node_modules/@angular/router/fesm2022/router.mjs",
+      "file": "@angular_router.js",
+      "fileHash": "c349f00b",
+      "needsInterop": false
+    },
+    "@angular/forms": {
+      "src": "../../../../../../node_modules/@angular/forms/fesm2022/forms.mjs",
+      "file": "@angular_forms.js",
+      "fileHash": "d1bd27ca",
+      "needsInterop": false
+    }
+  },
+  "chunks": {
+    "chunk-DIZOLSXI": {
+      "file": "chunk-DIZOLSXI.js"
+    },
+    "chunk-HS2QFHOX": {
+      "file": "chunk-HS2QFHOX.js"
+    },
+    "chunk-F3Y4CPLP": {
+      "file": "chunk-F3Y4CPLP.js"
+    },
+    "chunk-7VSUUCKJ": {
+      "file": "chunk-7VSUUCKJ.js"
+    },
+    "chunk-UXJAXTXK": {
+      "file": "chunk-UXJAXTXK.js"
+    }
+  }
+}
