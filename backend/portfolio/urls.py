@@ -23,7 +23,7 @@ router = DefaultRouter()
 router.register(r'projects', ProjectViewSet)
 router.register(r'skills', SkillViewSet)
 router.register(r'contact', ContactMessageViewSet)
-
+ 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/', include(router.urls)),
