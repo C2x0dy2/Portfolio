@@ -30,7 +30,7 @@ export interface ContactPayload {
   message: string;
 }
 
-const API = '/api';
+const API = 'https://portfolio-production-712e.up.railway.app/api';
 
 @Injectable({ providedIn: 'root' })
 export class ApiService {
