@@ -559,7 +559,6 @@
   font-weight: 500;
   margin: 0;
 }
-@keyframes loaderSlide { to { transform: translateX(0); } }
 
 /* ─── Interests Section ─── */
 .interests-section {
