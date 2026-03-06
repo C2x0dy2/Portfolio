@@ -11,7 +11,10 @@ class ProjectModelTest(TestCase):
             description="A test project",
             type="web",
             category="web",
-        )
+        ) 
+
+
+        
 
     def test_project_str(self):
         self.assertEqual(str(self.project), "Test Project")
